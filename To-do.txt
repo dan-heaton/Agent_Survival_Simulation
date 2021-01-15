@@ -1,3 +1,2 @@
-- Rename repo to 'Agent Survival Simulation' in GitHub and local
-- Add class for basic agent and basic functionality
-- Add class for environment and basic interactions with agent
+- Add environment visualisation function
+- Integrate BasicAgent class move interaction with BasicEnvironment
