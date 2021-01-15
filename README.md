@@ -1,4 +1,4 @@
-# CPP-Project
+# Agent Survival Simulation
 
 ## Project Stages Overview
 The project will proceed along several stages. The broad goal will be to create an environment(s) whereupon multiple agents interact with each other and the environment as independent entities seeking survival and duplication, a la natural selection. The stages are imagined as follows:
