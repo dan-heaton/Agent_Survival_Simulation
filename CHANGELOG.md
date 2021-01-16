@@ -1,6 +1,10 @@
 ## 0.1.2 - 16/01/21
 - Added initialisation of environment tiles, along with addition of energy sources and obstacles
 - Added visualisation function of environment tiles
+- Added ability to add agents to environment
+- Ensured agents stay within bounds when moving
+- Convert BasicAgent 'move_x()' and 'move_y()' into single 'move()' method
+- (WIP) Enable BasicAgent move behaviour to reflect in environment and in own state
 - Moved stuff to 'src' subdirectory
 
 ## 0.1.1 - 15/01/21

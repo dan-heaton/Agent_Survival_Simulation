@@ -1,2 +1,1 @@
-- Add environment visualisation function
-- Integrate BasicAgent class move interaction with BasicEnvironment
+- Implement pointer to BasicAgent within BasicEnvironment to enable sharing of information

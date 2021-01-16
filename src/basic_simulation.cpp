@@ -30,6 +30,10 @@ class BasicAgent {
     private:
         int x_pos;
         int y_pos;
+        //Unknown until it's initialised into a BasicEnvironment
+        vector <vector <char>> environment_tiles;
+        bool is_environ_set = false;
+        friend class BasicEnvironment;
 
 
     public:
@@ -37,23 +41,40 @@ class BasicAgent {
         BasicAgent(string message, int x_bound=100, int y_bound=100) {
             x_pos = rand() % x_bound + 1;
             y_pos = rand() % y_bound + 1;
-            cout << "BasicAgent created at x-pos " << x_pos << " and y-pos " << y_pos << "." << endl;
+            cout << "BasicAgent created at (" << x_pos << ", " << y_pos << ")" << endl;
             cout << "BasicAgent says '" << message << "'!" << endl;
         }
-        
-        void move_x(int x_move) {
-            x_pos += x_move;
-            state_position("X", x_move);
-        };
 
-        void move_y(int y_move) {
-            y_pos += y_move;
-            state_position("Y", y_move);
-        };
+        void move(char direction, int move_amount) {
 
-        void state_position(string dimension, int move_size) {
+            //TODO: when setting in BasicEnvironment, not updating this properly, so not able to move in current instantiation (try pointers?)
+            if (!is_environ_set) {
+                cout << "Agent can't move if environment is unknown..." << endl;
+                return;
+            }
+            if (direction == 'X') {
+                x_pos += move_amount;
+                if (x_pos > X_BOUND) {
+                    x_pos = X_BOUND;
+                }
+            }
+            else if (direction == 'Y') {
+                y_pos += move_amount;
+                if (y_pos > Y_BOUND) {
+                    y_pos = Y_BOUND;
+                }
+            }
+            else {
+                cout << "Unknown direction '" << direction << "', must be either 'X' or 'Y'..." << endl;
+                return;
+            }
+
+            state_position(direction, move_amount);
+        }
+
+        void state_position(char dimension, int move_size) {
             cout << "BasicAgent moved " << move_size << " units on " << dimension << 
-            "-axis to new x-pos " << x_pos << " and y-pos " << y_pos << "." << endl;
+            "-axis to new position (" << x_pos << ", " << y_pos << ")" << endl;
         }
 };
 
@@ -62,9 +83,11 @@ class BasicEnvironment {
     private:
         list <Obstacle> obstacles;
         list <Energy> energy_sources;
+        list <BasicAgent> agents;
         vector <vector <char>> environment_tiles;
         int x_bound;
         int y_bound;
+        int time_instance = 0;
 
         void insert_obstacles_energy(int num_obstacles, int num_energy_sources) {
             // Creates 'num_obstacles' objects at random positions within the environment bounds, and inserts them into the 2D board
@@ -113,6 +136,7 @@ class BasicEnvironment {
         }
 
         void environment_visualise(){
+            cout << endl << endl << "Time: " << time_instance << endl;
             for (int i=0; i<environment_tiles.size(); i++) {
                 for (int j=0; j<environment_tiles[i].size(); j++) {
                     cout << " " << environment_tiles[i][j] << " ";
@@ -120,6 +144,20 @@ class BasicEnvironment {
                 cout << endl;
             }
         }
+
+        //TODO: change to using pointer to BasicAgent instead?
+        void insert_agent(BasicAgent agent) {
+            agents.push_back(agent);
+            environment_tiles[agent.y_pos - 1][agent.x_pos - 1] = 'A';
+
+            // Updates each agent's knowledge of environment when a new agent is inserted into one
+            for (BasicAgent agnt: agents) {
+                agnt.environment_tiles = environment_tiles;
+                agnt.is_environ_set = true;
+            }
+        }
+
+        void update_agent_position() {}
 
 };
 
@@ -131,11 +169,16 @@ int main() {
     srand(time(NULL));
 
     BasicAgent agent_1("elo", X_BOUND, Y_BOUND);
-    agent_1.move_x(1);
     BasicAgent agent_2("ahoy-hoy", X_BOUND, Y_BOUND);
-    agent_2.move_y(1);
 
     BasicEnvironment environment(X_BOUND, Y_BOUND, 2, 3);
     environment.state_objects();
+
+    environment.insert_agent(agent_1);
+    environment.insert_agent(agent_2);
     environment.environment_visualise();
+
+    agent_1.move('X', 3);
+    agent_2.move('Y', 5);
+
 }
