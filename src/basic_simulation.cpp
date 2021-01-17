@@ -47,7 +47,6 @@ class BasicAgent {
 
         void move(char direction, int move_amount) {
 
-            //TODO: when setting in BasicEnvironment, not updating this properly, so not able to move in current instantiation (try pointers?)
             if (!is_environ_set) {
                 cout << "Agent can't move if environment is unknown..." << endl;
                 return;
@@ -83,7 +82,7 @@ class BasicEnvironment {
     private:
         list <Obstacle> obstacles;
         list <Energy> energy_sources;
-        list <BasicAgent> agents;
+        list <BasicAgent*> agent_ptrs;
         vector <vector <char>> environment_tiles;
         int x_bound;
         int y_bound;
@@ -145,15 +144,14 @@ class BasicEnvironment {
             }
         }
 
-        //TODO: change to using pointer to BasicAgent instead?
-        void insert_agent(BasicAgent agent) {
-            agents.push_back(agent);
-            environment_tiles[agent.y_pos - 1][agent.x_pos - 1] = 'A';
+        void insert_agent(BasicAgent *agent){
+            agent_ptrs.push_back(agent);
+            environment_tiles[agent->y_pos - 1][agent->x_pos - 1] = 'A';
 
             // Updates each agent's knowledge of environment when a new agent is inserted into one
-            for (BasicAgent agnt: agents) {
-                agnt.environment_tiles = environment_tiles;
-                agnt.is_environ_set = true;
+            for (BasicAgent *agnt: agent_ptrs) {
+                agnt->environment_tiles = environment_tiles;
+                agnt->is_environ_set = true;
             }
         }
 
@@ -174,8 +172,8 @@ int main() {
     BasicEnvironment environment(X_BOUND, Y_BOUND, 2, 3);
     environment.state_objects();
 
-    environment.insert_agent(agent_1);
-    environment.insert_agent(agent_2);
+    environment.insert_agent(&agent_1);
+    environment.insert_agent(&agent_2);
     environment.environment_visualise();
 
     agent_1.move('X', 3);

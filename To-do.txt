@@ -1,1 +1,1 @@
-- Implement pointer to BasicAgent within BasicEnvironment to enable sharing of information
+- Add behaviour to BasicAgent to stop at energy or obstacle while moving

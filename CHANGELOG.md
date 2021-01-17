@@ -1,3 +1,6 @@
+## 0.1.3 - 16/01/21
+- Implemented pointer to BasicAgent within BasicEnvironment to enable sharing of information
+
 ## 0.1.2 - 16/01/21
 - Added initialisation of environment tiles, along with addition of energy sources and obstacles
 - Added visualisation function of environment tiles
