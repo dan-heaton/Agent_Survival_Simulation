@@ -6,7 +6,9 @@
             "command": "/usr/bin/g++",
             "args": [
                 "-g",
-                "${file}",
+                "src/main.cpp",
+                "src/BasicAgent.cpp",
+                "src/BasicEnvironment.cpp",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],

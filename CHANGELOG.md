@@ -1,5 +1,6 @@
 ## 0.1.3 - 16/01/21
 - Implemented pointer to BasicAgent within BasicEnvironment to enable sharing of information
+- Split BasicAgent and BasicEnvironment from 'basic_simulation.cpp' w/ associated header + cpp files, and renamed 'basic_simulation.cpp' to 'main.cpp'
 
 ## 0.1.2 - 16/01/21
 - Added initialisation of environment tiles, along with addition of energy sources and obstacles
