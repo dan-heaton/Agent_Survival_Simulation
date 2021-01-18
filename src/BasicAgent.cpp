@@ -37,13 +37,24 @@ int BasicAgent::check_path(char direction, int new_pos) {
                 return i-1;
             }
             else if (environment_tiles[i-1][x_pos-1] == 'E') {
-                cout << "Agent '" << name << "' encountered energy at (" << i << ", " << y_pos << "); consuming and continuing..." << endl;
+                cout << "Agent '" << name << "' encountered energy at (" << x_pos << ", " << i << "); consuming and continuing..." << endl;
                 energy += 1;
                 environment_tiles[i-1][x_pos-1] = '-';
             }
         }
     }
     // If got here, no obstacles in path, so can keep 'new_pos' as final destination on path
+    return new_pos;
+}
+
+
+int BasicAgent::check_bounds(int bound, int new_pos) {
+    if (new_pos > bound) {
+        new_pos = bound;
+    }
+    else if (new_pos < 0) {
+        new_pos = 0;
+    }
     return new_pos;
 }
 
@@ -56,15 +67,11 @@ void BasicAgent::move(char direction, int move_amount) {
     int new_pos;
     if (direction == 'X') {
         new_pos = x_pos + move_amount;
-        if (new_pos > x_bound) {
-            new_pos = x_bound;
-        }
+        new_pos = check_bounds(x_bound, new_pos);
     }
     else if (direction == 'Y') {
         new_pos = y_pos + move_amount;
-        if (new_pos > y_bound) {
-            new_pos = y_bound;
-        }
+        new_pos = check_bounds(y_bound, new_pos);
     }
     else {
         cout << "Unknown direction '" << direction << "', must be either 'X' or 'Y'..." << endl;

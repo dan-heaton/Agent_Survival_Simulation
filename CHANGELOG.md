@@ -1,6 +1,7 @@
 ## 0.1.4 - 17/01/21
 - Added behaviour to BasicAgent to stop at obstacle or consume energy while moving
 - Added 'name' attribute for BasicAgent in place of it's 'message'
+- Implemented agent move boundary checking in both positive and negative directions, and as separate 'check_bounds()' function
 
 ## 0.1.3 - 16/01/21
 - Implemented pointer to BasicAgent within BasicEnvironment to enable sharing of information

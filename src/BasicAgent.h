@@ -21,6 +21,7 @@ class BasicAgent {
         friend class BasicEnvironment;
 
         int check_path(char direction, int new_pos);
+        int check_bounds(int bound, int new_pos);
 
     public:
         
