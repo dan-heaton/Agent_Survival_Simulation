@@ -17,6 +17,7 @@ class BasicAgent {
         int energy = 0;
         //Unknown until it's initialised into a BasicEnvironment
         vector <vector <char>> environment_tiles;
+        vector <vector <int>> energies_consumed;
         bool is_environ_set = false;
         friend class BasicEnvironment;
 
