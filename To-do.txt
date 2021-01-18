@@ -1,2 +1,2 @@
-- Add behaviour to BasicAgent to stop at energy or obstacle while moving
+- Enable updating of environment object based on agent actions
 - Add 'seek_energy()' function to BasicAgent

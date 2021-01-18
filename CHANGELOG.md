@@ -1,3 +1,7 @@
+## 0.1.4 - 17/01/21
+- Added behaviour to BasicAgent to stop at obstacle or consume energy while moving
+- Added 'name' attribute for BasicAgent in place of it's 'message'
+
 ## 0.1.3 - 16/01/21
 - Implemented pointer to BasicAgent within BasicEnvironment to enable sharing of information
 - Split BasicAgent and BasicEnvironment from 'basic_simulation.cpp' w/ associated header + cpp files, and renamed 'basic_simulation.cpp' to 'main.cpp'
