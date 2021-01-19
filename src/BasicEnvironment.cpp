@@ -56,14 +56,15 @@ void BasicEnvironment::state_objects() {
         }
 
 
-void BasicEnvironment::environment_visualise(){
-            cout << endl << endl << "Time: " << time_instance << endl;
+void BasicEnvironment::visualise(){
+            cout << "Time: " << time_instance << endl;
             for (int i=0; i<environment_tiles.size(); i++) {
                 for (int j=0; j<environment_tiles[i].size(); j++) {
                     cout << " " << environment_tiles[i][j] << " ";
                 }
                 cout << endl;
             }
+            cout << endl << endl;
         }
         
 void BasicEnvironment::insert_agent(BasicAgent *agent){

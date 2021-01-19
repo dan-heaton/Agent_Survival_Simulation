@@ -16,7 +16,15 @@ BasicAgent::BasicAgent(string name, int x_bound, int y_bound) : name(name), x_bo
 
 int BasicAgent::check_path(char direction, int new_pos) {
     if (direction == 'X') {
-        for (int i=x_pos; i<new_pos; i++) {
+        // Handles if the agent is moving in the negative direction
+        int incrementer;
+        if (new_pos < x_pos) {
+            incrementer = -1;
+        }
+        else {
+            incrementer = 1;
+        }
+        for (int i=x_pos; i<new_pos+1; i+=incrementer) {
             if (environment_tiles[y_pos-1][i-1] == 'O') {
                 cout << "Agent '" << name << "' encountered obstacle at (" << i << ", " << y_pos << "); stopping here..." << endl;
                 // Stops the square before the obstacle
@@ -31,7 +39,15 @@ int BasicAgent::check_path(char direction, int new_pos) {
         }
     }
     else {
-        for (int i=y_pos; i<new_pos; i++) {
+        // Handles if the agent is moving in the negative direction
+        int incrementer;
+        if (new_pos < y_pos) {
+            incrementer = -1;
+        }
+        else {
+            incrementer = 1;
+        }
+        for (int i=y_pos; i<new_pos+1; i+=incrementer) {
             if (environment_tiles[i-1][x_pos-1] == 'O') {
                 cout << "Agent '" << name << "' encountered obstacle at (" << x_pos << ", " << i << "); stopping here..." << endl;
                 // Stops the square before the obstacle

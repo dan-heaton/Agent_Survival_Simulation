@@ -1,5 +1,7 @@
 ## 0.1.5 - 18/01/21
 - Added 'move_random()' method to BasicAgent, which utilises existing 'move()' method with randomised arguments
+- Added 'run_simulation()' to 'main.cpp' to initiate and manage a simulation
+- Minor bug fixes
 
 ## 0.1.4 - 17/01/21
 - Added behaviour to BasicAgent to stop at obstacle or consume energy while moving

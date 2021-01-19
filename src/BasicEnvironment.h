@@ -39,7 +39,7 @@ class BasicEnvironment {
     public:
         BasicEnvironment(int x_bound, int y_bound, int num_obstacles, int num_energy_sources);
         void state_objects();
-        void environment_visualise();
+        void visualise();
         void insert_agent(BasicAgent *agent);
         void update();
 };
