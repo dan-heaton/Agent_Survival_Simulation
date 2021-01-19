@@ -79,6 +79,8 @@ void BasicEnvironment::insert_agent(BasicAgent *agent){
 
 void BasicEnvironment::update() {
 
+    time_instance += 1;
+
     // Resets any previous agent icon on tiles from 'A' to '-'
     for (int i=0; i<environment_tiles.size(); i++) {
         for (int j=0; j<environment_tiles[i].size(); j++) {
@@ -98,7 +100,7 @@ void BasicEnvironment::update() {
             for (Energy energy_source: energy_sources) {
                 if (energy_source.x_pos-1 == energy_consumed[1] and energy_source.y_pos-1 == energy_consumed[0] and !energy_source.is_consumed) {
                     agnt->energy += energy_source.energy_val;
-                    cout << "Agent '" << agnt->name << "' received " << energy_source.energy_val << " energy; now has " << agnt->energy << " energy";
+                    cout << "Agent '" << agnt->name << "' received " << energy_source.energy_val << " energy; now has " << agnt->energy << " energy" << endl;
                     // Ensures that if the agent has stopped on the location of the energy we don't overwrite it's own icon on the tiles
                     if (environment_tiles[energy_source.y_pos-1][energy_source.x_pos-1] != 'A') {
                         environment_tiles[energy_source.y_pos-1][energy_source.x_pos-1] = '-';

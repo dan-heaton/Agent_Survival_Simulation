@@ -54,8 +54,8 @@ int BasicAgent::check_bounds(int bound, int new_pos) {
     if (new_pos > bound) {
         new_pos = bound;
     }
-    else if (new_pos < 0) {
-        new_pos = 0;
+    else if (new_pos < 1) {
+        new_pos = 1;
     }
     return new_pos;
 }
@@ -91,6 +91,22 @@ void BasicAgent::move(char direction, int move_amount) {
     }
 
     state_position(direction, move_amount);
+}
+
+
+void BasicAgent::move_random() {
+    int move_amount = rand() % (x_bound*2 + 1) - x_bound;
+    int direction_num = rand() % 2;
+
+
+    char direction;
+    if (direction_num == 0) {
+        direction = 'X';
+    }
+    else {
+        direction = 'Y';
+    }
+    move(direction, move_amount);
 }
 
 
