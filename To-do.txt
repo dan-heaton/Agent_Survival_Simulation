@@ -1,1 +1,10 @@
-- Add 'seek_energy()' function to BasicAgent
+- Move output of simulation to separate produced window
+- Implemented 'timed' simulation, so that window updates with each time step (e.g. once per second)
+- Add 'AdvancedAgent' class into separate cpp/header, to have more advanced 'seek_energy()' behaviour (including avoid obstacles)
+- Add to 'AdvancedAgent' more attributes (e.g. speed, energy_to_replicate) that is randomised upon creation
+- Add to 'AdvancedAgent' ability to replicate upon reaching a specific energy, along with how these are created and added to simulation
+- Add 'Predator' class to seek out 'AdvancedAgent's, whom in turn try to avoid the former
+- Make other resources part of environment (e.g. protection from predators) and modify AdvancedAgent behaviour to seek these too
+- Add random destructive events to environment (e.g. destroys certain agents/obstacles) + implement in simulation
+- Improve AdvancedAgent replication to use aspects of crossover/mutation
+- Improve AdvancedAgent 'seek_energy()' behaviour to take value of energy into account
