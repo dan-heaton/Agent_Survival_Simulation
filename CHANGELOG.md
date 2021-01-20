@@ -1,3 +1,6 @@
+## 0.1.6 - 19/01/21
+- Added 'seek_energy()' function to BasicAgent
+
 ## 0.1.5 - 18/01/21
 - Added 'move_random()' method to BasicAgent, which utilises existing 'move()' method with randomised arguments
 - Added 'run_simulation()' to 'main.cpp' to initiate and manage a simulation

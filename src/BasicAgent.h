@@ -29,6 +29,7 @@ class BasicAgent {
         BasicAgent(string message, int x_bound=100, int y_bound=100);
         void move(char direction, int move_amount);
         void move_random();
+        void seek_energy();
         void state_position(char dimension, int move_size);
 };
 

@@ -5,7 +5,7 @@
 using namespace std;
 
 
-void run_simulation(int time_steps, int x_bound, int y_bound, int num_agents, int num_obstacles, int num_energies) {
+void run_simulation(int time_steps, int x_bound, int y_bound, int num_agents, int num_obstacles, int num_energies, bool seek_energy) {
     BasicEnvironment environment(x_bound, y_bound, num_obstacles, num_energies);
 
     // Creates all agents and inserts them into the environment
@@ -22,7 +22,12 @@ void run_simulation(int time_steps, int x_bound, int y_bound, int num_agents, in
     // For the required number of time steps, have all agents move randomly across the board
     for (int i=0; i<time_steps; i++) {
         for (BasicAgent* agent_ptr: agent_ptrs) {
-            agent_ptr->move_random();
+            if (seek_energy) {
+                agent_ptr->seek_energy();
+            }
+            else {
+                agent_ptr->move_random();
+            }
         }
         environment.update();
         environment.visualise();
@@ -40,12 +45,12 @@ void run_simulation(int time_steps, int x_bound, int y_bound, int num_agents, in
 int main() {
 
     srand(time(NULL));
-    int time_steps = 5;
+    int time_steps = 50;
     int x_bound = 15;
     int y_bound = 15;
-    int num_agents = 4;
-    int num_obstacles = 20;
+    int num_agents = 1;
+    int num_obstacles = 0;
     int num_energies = 20;
 
-    run_simulation(time_steps, x_bound, y_bound, num_agents, num_obstacles, num_energies);
+    run_simulation(time_steps, x_bound, y_bound, num_agents, num_obstacles, num_energies, true);
 }
