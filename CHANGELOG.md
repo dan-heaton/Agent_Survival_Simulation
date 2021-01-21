@@ -1,18 +1,21 @@
-## 0.1.6 - 19/01/21
+## 0.1.7 - 21/01/21
+- Moved running of simulation to separate .cpp/.h file
+
+## 0.1.6 - 20/01/21
 - Added 'seek_energy()' function to BasicAgent
 
-## 0.1.5 - 18/01/21
+## 0.1.5 - 19/01/21
 - Added 'move_random()' method to BasicAgent, which utilises existing 'move()' method with randomised arguments
 - Added 'run_simulation()' to 'main.cpp' to initiate and manage a simulation
 - Minor bug fixes
 
-## 0.1.4 - 17/01/21
+## 0.1.4 - 18/01/21
 - Added behaviour to BasicAgent to stop at obstacle or consume energy while moving
 - Added 'name' attribute for BasicAgent in place of it's 'message'
 - Implemented agent move boundary checking in both positive and negative directions, and as separate 'check_bounds()' function
 - Added 'update()' method to BasicEnvironment to update its copy of the board based on agents' movements and/or consumption of energies
 
-## 0.1.3 - 16/01/21
+## 0.1.3 - 17/01/21
 - Implemented pointer to BasicAgent within BasicEnvironment to enable sharing of information
 - Split BasicAgent and BasicEnvironment from 'basic_simulation.cpp' w/ associated header + cpp files, and renamed 'basic_simulation.cpp' to 'main.cpp'
 

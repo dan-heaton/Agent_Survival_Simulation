@@ -1,3 +1,4 @@
+- Add generation of .csv from simulation
 - Move output of simulation to separate produced window
 - Implemented 'timed' simulation, so that window updates with each time step (e.g. once per second)
 - Add 'AdvancedAgent' class into separate cpp/header, to have more advanced 'seek_energy()' behaviour (including avoid obstacles)
