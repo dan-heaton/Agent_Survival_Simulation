@@ -1,6 +1,5 @@
 - Add generation of .csv from simulation
 - Move output of simulation to separate produced window
-- Implemented 'timed' simulation, so that window updates with each time step (e.g. once per second)
 - Add 'AdvancedAgent' class into separate cpp/header, to have more advanced 'seek_energy()' behaviour (including avoid obstacles)
 - Add to 'AdvancedAgent' more attributes (e.g. speed, energy_to_replicate) that is randomised upon creation
 - Add to 'AdvancedAgent' ability to replicate upon reaching a specific energy, along with how these are created and added to simulation

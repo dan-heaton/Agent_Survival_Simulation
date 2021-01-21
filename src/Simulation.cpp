@@ -1,11 +1,12 @@
 #include <iostream>
 #include "BasicAgent.h"
 #include "BasicEnvironment.h"
+#include <unistd.h>
 
 using namespace std;
 
 
-void run_simulation(int time_steps, int x_bound, int y_bound, int num_agents, int num_obstacles, int num_energies, bool seek_energy) {
+void run_simulation(int time_steps, int x_bound, int y_bound, int num_agents, int num_obstacles, int num_energies, bool seek_energy, int time_delay) {
     BasicEnvironment environment(x_bound, y_bound, num_obstacles, num_energies);
 
     // Creates all agents and inserts them into the environment
@@ -21,6 +22,8 @@ void run_simulation(int time_steps, int x_bound, int y_bound, int num_agents, in
 
     // For the required number of time steps, have all agents move randomly across the board
     for (int i=0; i<time_steps; i++) {
+        //Delays output of new board so shows running in 'real-time' if necessary
+        sleep(time_delay);
         for (BasicAgent* agent_ptr: agent_ptrs) {
             if (seek_energy) {
                 agent_ptr->seek_energy();

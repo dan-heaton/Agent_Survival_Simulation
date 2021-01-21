@@ -1,5 +1,6 @@
 ## 0.1.7 - 21/01/21
 - Moved running of simulation to separate .cpp/.h file
+- Implemented 'timed' simulation, so that window updates with each time step (e.g. once per second)
 
 ## 0.1.6 - 20/01/21
 - Added 'seek_energy()' function to BasicAgent

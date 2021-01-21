@@ -2,6 +2,7 @@
 #define SIMULATION_H
 
 
-void run_simulation(int time_steps, int x_bound, int y_bound, int num_agents, int num_obstacles, int num_energies, bool seek_energy);
+void run_simulation(int time_steps, int x_bound, int y_bound, int num_agents, 
+                    int num_obstacles, int num_energies, bool seek_energy, int time_delay=0);
 
 #endif

@@ -11,6 +11,8 @@ int main() {
     int num_agents = 1;
     int num_obstacles = 0;
     int num_energies = 20;
+    //In seconds
+    int time_delay = 1;
 
-    run_simulation(time_steps, x_bound, y_bound, num_agents, num_obstacles, num_energies, true);
+    run_simulation(time_steps, x_bound, y_bound, num_agents, num_obstacles, num_energies, true, time_delay);
 }
