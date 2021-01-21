@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <algorithm>
 #include "BasicAgent.h"
 
 using namespace std;
@@ -16,15 +17,16 @@ BasicAgent::BasicAgent(string name, int x_bound, int y_bound) : name(name), x_bo
 
 int BasicAgent::check_path(char direction, int new_pos) {
     if (direction == 'X') {
-        // Handles if the agent is moving in the negative direction
-        int incrementer;
-        if (new_pos < x_pos) {
-            incrementer = -1;
+        // Handles if the agent is moving in the negative direction, so as to properly enter the below 'for' loop
+        vector<int> increment_positions;
+        for (int i=min(x_pos, new_pos); i<max(x_pos, new_pos)+1; i++) {
+            increment_positions.push_back(i);
         }
-        else {
-            incrementer = 1;
+        if (x_pos > new_pos) {
+            reverse(increment_positions.begin(), increment_positions.end());
         }
-        for (int i=x_pos; i<new_pos+1; i+=incrementer) {
+
+        for (int i: increment_positions) {
             if (environment_tiles[y_pos-1][i-1] == 'O') {
                 cout << "Agent '" << name << "' encountered obstacle at (" << i << ", " << y_pos << "); stopping here..." << endl;
                 // Stops the square before the obstacle
@@ -39,15 +41,16 @@ int BasicAgent::check_path(char direction, int new_pos) {
         }
     }
     else {
-        // Handles if the agent is moving in the negative direction
-        int incrementer;
-        if (new_pos < y_pos) {
-            incrementer = -1;
+        // Handles if the agent is moving in the negative direction, so as to properly enter the below 'for' loop
+        vector<int> increment_positions;
+        for (int i=min(y_pos, new_pos); i<max(y_pos, new_pos)+1; i++) {
+            increment_positions.push_back(i);
         }
-        else {
-            incrementer = 1;
+        if (y_pos > new_pos) {
+            reverse(increment_positions.begin(), increment_positions.end());
         }
-        for (int i=y_pos; i<new_pos+1; i+=incrementer) {
+
+        for (int i: increment_positions) {
             if (environment_tiles[i-1][x_pos-1] == 'O') {
                 cout << "Agent '" << name << "' encountered obstacle at (" << x_pos << ", " << i << "); stopping here..." << endl;
                 // Stops the square before the obstacle
