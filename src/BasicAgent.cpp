@@ -189,3 +189,13 @@ void BasicAgent::state_position(char dimension, int move_size) {
     cout << "BasicAgent '"<<  name << "' moved " << move_size << " units on " << dimension << 
     "-axis to new position (" << x_pos << ", " << y_pos << ")" << endl;
 }
+
+
+int BasicAgent::get_x_pos() {
+    return x_pos;
+}
+
+
+int BasicAgent::get_y_pos() {
+    return y_pos;
+}

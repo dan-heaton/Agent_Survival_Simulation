@@ -42,6 +42,9 @@ class BasicEnvironment {
         void visualise();
         void insert_agent(BasicAgent *agent);
         void update();
+        int number_energies_remaining();
+        list <Obstacle> get_obstacles();
+        list <Energy> get_energy_sources();
 };
 
 #endif

@@ -24,13 +24,14 @@ class BasicAgent {
         int check_path(char direction, int new_pos);
         int check_bounds(int bound, int new_pos);
 
-    public:
-        
+    public:  
         BasicAgent(string message, int x_bound=100, int y_bound=100);
         void move(char direction, int move_amount);
         void move_random();
         void seek_energy();
         void state_position(char dimension, int move_size);
+        int get_x_pos();
+        int get_y_pos();
 };
 
 #endif

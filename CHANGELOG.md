@@ -2,6 +2,8 @@
 - Moved running of simulation to separate .cpp/.h file
 - Implemented 'timed' simulation, so that window updates with each time step (e.g. once per second)
 - Fix for issue with agent picking up energy on negative x/y movement but not detecting until a positive x/y movement
+- Fix for issue with instantion of obstacles/energies on top of each other, resulting in fewer obstacles/energies than desired
+- Added generation of .csv from simulation
 
 ## 0.1.6 - 20/01/21
 - Added 'seek_energy()' function to BasicAgent
