@@ -1,6 +1,7 @@
 ## 0.1.8 - 22/01/21
 - Moved header files to separate 'include' subdirectory + modify source files to utilise these, along with change in settings
 - Reorganised 'Simulation.cpp'/'Simulation.h' as a single class w/ functions now as methods, and split 'run_simulation()' into two methods
+- Modified .csv's to being output to separate 'outputs' directory + w/ suffixes on names based on current datetime
 
 ## 0.1.7 - 21/01/21
 - Moved running of simulation to separate .cpp/.h file

@@ -1,4 +1,3 @@
-- Tidy up simulation .csv output, including having them output to separate folder + w/ unique names
 - Write Python script to analyse .csv output files + produces metrics (e.g. avg energies consumed per move)
 - Write Python script to produce separate window as running simulation
 - Add 'AdvancedAgent' class into separate cpp/header, to have more advanced 'seek_energy()' behaviour (including avoid obstacles)

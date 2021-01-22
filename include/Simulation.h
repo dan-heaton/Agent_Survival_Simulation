@@ -18,6 +18,7 @@ class Simulation {
         int num_energies;
         bool seek_energy;
         bool output_to_csv;
+        string file_suffix;
     
     public:
         Simulation(int time_steps, int x_bound, int y_bound, int num_agents, int num_obstacles, 

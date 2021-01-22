@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <fstream>
+#include <ctime>
 #include "../include/BasicAgent.h"
 #include "../include/BasicEnvironment.h"
 #include "../include/Simulation.h"
@@ -14,11 +15,22 @@ Simulation::Simulation(int time_steps, int x_bound, int y_bound,
                        bool seek_energy, bool output_csv) 
                        :time_steps(time_steps), x_bound(x_bound), y_bound(y_bound), 
                        num_agents(num_agents), num_obstacles(num_obstacles), num_energies(num_energies), 
-                       seek_energy(seek_energy), output_to_csv(output_to_csv) {}
+                       seek_energy(seek_energy), output_to_csv(output_to_csv) {
+
+                           if (output_to_csv) {
+                               //Generates timedate as string in format "YYYY-MM-DD-HH-MM-SS" to use in file name
+                                time_t t = std::time(0);
+                                tm* now = std::localtime(&t);
+                                file_suffix = to_string(now->tm_year + 1900) + '-' + to_string(now->tm_mon + 1) + '-' 
+                                              + to_string(now->tm_mday) + '-' + to_string(now->tm_hour) + '-' 
+                                              + to_string(now->tm_min) + '-' + to_string(now->tm_sec);
+                           }
+                       }
 
 
 void Simulation::output_csv_row(vector <string> outputs) {
-    ofstream file("simulation.csv", ios::app);
+    string file_name = "outputs/simulation_" + file_suffix + ".csv";
+    ofstream file(file_name, ios::app);
 
     for (string output: outputs) { 
         file << output << "\t";
