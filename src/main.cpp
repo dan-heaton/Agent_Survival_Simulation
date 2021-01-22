@@ -16,5 +16,6 @@ int main() {
     //In seconds
     int time_delay = 1;
 
-    run_simulation(time_steps, x_bound, y_bound, num_agents, num_obstacles, num_energies, seek_energy, output_csv, time_delay);
+    Simulation sim(time_steps, x_bound, y_bound, num_agents, num_obstacles, num_energies, seek_energy, output_csv);
+    sim.run_simulation(time_delay);
 }

@@ -47,4 +47,5 @@ class BasicEnvironment {
         list <Energy> get_energy_sources();
 };
 
+
 #endif
