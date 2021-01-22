@@ -1,8 +1,8 @@
 #include <iostream>
 #include <unistd.h>
 #include <fstream>
-#include "BasicAgent.h"
-#include "BasicEnvironment.h"
+#include "../include/BasicAgent.h"
+#include "../include/BasicEnvironment.h"
 
 using namespace std;
 

@@ -1,3 +1,6 @@
+## 0.1.8 - 22/01/21
+- Moved header files to separate 'include' subdirectory + modify source files to utilise these, along with change in settings
+
 ## 0.1.7 - 21/01/21
 - Moved running of simulation to separate .cpp/.h file
 - Implemented 'timed' simulation, so that window updates with each time step (e.g. once per second)

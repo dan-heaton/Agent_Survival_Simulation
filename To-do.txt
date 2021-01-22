@@ -1,4 +1,6 @@
-- Move output of simulation to separate produced window
+- Tidy up simulation .csv output, including having them output to separate folder + w/ unique names
+- Write Python script to analyse .csv output files + produces metrics (e.g. avg energies consumed per move)
+- Write Python script to produce separate window as running simulation
 - Add 'AdvancedAgent' class into separate cpp/header, to have more advanced 'seek_energy()' behaviour (including avoid obstacles)
 - Add to 'AdvancedAgent' more attributes (e.g. speed, energy_to_replicate) that is randomised upon creation
 - Add to 'AdvancedAgent' ability to replicate upon reaching a specific energy, along with how these are created and added to simulation
