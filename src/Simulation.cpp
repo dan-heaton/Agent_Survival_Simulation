@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <fstream>
 #include <ctime>
+#include "../include/AdvancedAgent.h"
 #include "../include/BasicAgent.h"
 #include "../include/BasicEnvironment.h"
 #include "../include/Simulation.h"
@@ -12,12 +13,12 @@ using namespace std;
 
 Simulation::Simulation(int time_steps, int x_bound, int y_bound, 
                        int num_agents, int num_obstacles, int num_energies, 
-                       bool seek_energy, bool output_csv) 
+                       bool seek_energy, bool output_csv, bool use_advanced_agents) 
                        :time_steps(time_steps), x_bound(x_bound), y_bound(y_bound), 
                        num_agents(num_agents), num_obstacles(num_obstacles), num_energies(num_energies), 
-                       seek_energy(seek_energy), output_to_csv(output_to_csv) {
+                       seek_energy(seek_energy), output_csv(output_csv), use_advanced_agents(use_advanced_agents) {
 
-                           if (output_to_csv) {
+                           if (output_csv) {
                                //Generates timedate as string in format "YYYY-MM-DD-HH-MM-SS" to use in file name
                                 time_t t = std::time(0);
                                 tm* now = std::localtime(&t);
@@ -44,7 +45,7 @@ void Simulation::output_csv_row(vector <string> outputs) {
 void Simulation::initialise_csv(BasicEnvironment environment, vector <BasicAgent*> agent_ptrs) {
 
     //Sets up 1st line for initial settings headers
-    vector <string> first_outputs = {"Time Steps", "X-bound", "Y-bound", "# Agents", "# Obstacles", "# Energies", "Seek Energy?"};
+    vector <string> first_outputs = {"Time Steps", "X-bound", "Y-bound", "# Agents", "# Obstacles", "# Energies", "Seek Energy?", "Advanced Agents?"};
     for (int i=0; i<num_obstacles; i++) {
         for (char dimension: vector <char> {'X', 'Y'}) {
             first_outputs.push_back("Obstacle " + to_string(i+1) + " " + dimension + "-Pos");
@@ -59,7 +60,8 @@ void Simulation::initialise_csv(BasicEnvironment environment, vector <BasicAgent
 
     //Sets up 2nd line for initial settings
     vector <string> second_outputs = {to_string(time_steps), to_string(x_bound), to_string(y_bound), to_string(num_agents), 
-                                        to_string(num_obstacles), to_string(num_energies), seek_energy ? "true": "false"};
+                                      to_string(num_obstacles), to_string(num_energies), 
+                                      seek_energy ? "true": "false", use_advanced_agents? "true": "false"};
     for (Obstacle obst: environment.get_obstacles()) {
         second_outputs.insert(second_outputs.end(), {to_string(obst.x_pos), to_string(obst.y_pos)});
     }
@@ -95,8 +97,17 @@ void Simulation::run_simulation(int time_delay) {
     vector <BasicAgent*> agent_ptrs;
     for (int i=0; i<num_agents; i++) {
         string agent_name = "Agent " + to_string(i+1);
-        // Needs dynamic allocation to ensure objects survive out of the 'for' scope
-        BasicAgent* agent_ptr = new BasicAgent(agent_name, x_bound, y_bound);
+        //Creates a new agent point from either BasicAgent or AdvancedAgent, and uses polymorphism to call
+        //each class' respective 'seek_energy()' funtion
+        BasicAgent* agent_ptr;
+        if (use_advanced_agents) {
+            agent_ptr = new AdvancedAgent(agent_name, x_bound, y_bound);
+        }
+        else {
+            // Needs dynamic allocation to ensure objects survive out of the 'for' scope
+            agent_ptr = new BasicAgent(agent_name, x_bound, y_bound);            
+        }
+
         environment.insert_agent(agent_ptr);
         agent_ptrs.push_back(agent_ptr);
     }
@@ -105,7 +116,7 @@ void Simulation::run_simulation(int time_delay) {
 
     //Sets up the inital .csv output file w/ 1st line for initial settings headers, 2nd for initial settings, 
     //3rd for other headers, and 4th for time 0 setting
-    if (output_to_csv) {
+    if (output_csv) {
         initialise_csv(environment, agent_ptrs);
     }
 
@@ -129,7 +140,7 @@ void Simulation::run_simulation(int time_delay) {
         outputs.insert(outputs.begin(), {to_string(i+1), to_string(environment.number_energies_remaining())});
 
         //Output the simulation state at time 'i+1' to the output .csv
-        if (output_to_csv) {
+        if (output_csv) {
             output_csv_row(outputs);
         }   
     }

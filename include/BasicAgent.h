@@ -29,7 +29,8 @@ class BasicAgent {
         BasicAgent(string message, int x_bound=100, int y_bound=100);
         void move(char direction, int move_amount);
         void move_random();
-        void seek_energy();
+        //Virtual allows AdvancedAgent's overriden version to be used correctly in Simulation class
+        virtual void seek_energy();
         int get_x_pos();
         int get_y_pos();
 };

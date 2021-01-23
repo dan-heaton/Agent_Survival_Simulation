@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../include/Simulation.h"
+#include "../include/AdvancedAgent.h"
 
 
 int main() {
@@ -15,7 +16,9 @@ int main() {
     bool output_csv = true;
     //In seconds
     int time_delay = 1;
+    // If set false, uses BasicAgent; otherwise, uses AdvancedAgent
+    bool used_advanced_agents = true;
 
-    Simulation sim(time_steps, x_bound, y_bound, num_agents, num_obstacles, num_energies, seek_energy, output_csv);
+    Simulation sim(time_steps, x_bound, y_bound, num_agents, num_obstacles, num_energies, seek_energy, output_csv, used_advanced_agents);
     sim.run_simulation(time_delay);
 }

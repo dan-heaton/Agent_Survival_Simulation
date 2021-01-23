@@ -1,3 +1,8 @@
+## 0.1.9 - 23/01/21
+- Improved 'tasks.json' to include all .cpp files automatically, and made 'BasicAgent::state_position()' private (as already used privately)
+- Setup 'AdvancedAgent' as inheriting from 'BasicAgent', in separate .cpp/.h and using necessary polymorphism alongside own 
+implementation of 'seek_energy()' (implementation of full 'seek_energy()' still WIP)
+
 ## 0.1.8 - 22/01/21
 - Moved header files to separate 'include' subdirectory + modify source files to utilise these, along with change in settings
 - Reorganised 'Simulation.cpp'/'Simulation.h' as a single class w/ functions now as methods, and split 'run_simulation()' into two methods
