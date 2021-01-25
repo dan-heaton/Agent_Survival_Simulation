@@ -1,3 +1,7 @@
+## 0.1.10 - 25/01/21
+- Separated 'seek_energy()' of BasicAgent into several subroutines, which should make constructing AdvancedAgent's 
+redefined 'seek_energy()' easier to implement
+
 ## 0.1.9 - 23/01/21
 - Improved 'tasks.json' to include all .cpp files automatically, and made 'BasicAgent::state_position()' private (as already used privately)
 - Setup 'AdvancedAgent' as inheriting from 'BasicAgent', in separate .cpp/.h and using necessary polymorphism alongside own 

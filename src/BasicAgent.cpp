@@ -129,6 +129,54 @@ void BasicAgent::move_random() {
 }
 
 
+vector <vector <int>> BasicAgent::generate_search_positions(int search_radius) {
+    //Generates all the positions on the board in which to search for energy
+    //Note: positions are relative to current position (centered at (0, 0))
+    vector <vector <int>> search_positions;
+    for (int i=-search_radius; i<search_radius+1; i++) {
+        for (int j=-search_radius; j<search_radius+1; j++) {    
+            //Ensures that only 'new' tiles get searched
+            if (abs(i) == search_radius or abs(j) == search_radius){
+                //Ensures that only tiles in bounds get searched
+                if (i+y_pos > 0 and j+x_pos > 0) {
+                    vector <int> search_position = {j, i};
+                    search_positions.push_back(search_position);
+                }
+            }   
+        }
+    }
+    return search_positions;
+}
+
+
+bool BasicAgent::move_to_energy(vector <vector <int>> search_positions) {
+    //If finds any energies within the selected radius, moves towards it
+    //Note: at present, doesn't attempt to move around obstacles (something for more advanced agent)
+    bool found_energy = false;
+    for (vector<int> search_position: search_positions) {
+        int x_search_position = search_position[0] + x_pos - 1;
+        int y_search_position = search_position[1] + y_pos - 1;
+        //Ensures that agent doesn't try to search out of bounds
+        if (y_search_position >= 0 and y_search_position < y_bound and x_search_position >= 0 and x_search_position < x_bound) {
+            char tile_value = environment_tiles[y_search_position][x_search_position];
+            if (tile_value == 'E') {
+                //If energy lies somewhere different on X-plane, move in that direction 
+                //and, if not diagonal from the agent, moves onto the energy; otherwise, moves on Y-plane
+                if (search_position[0] != 0) {
+                    move('X', search_position[0]);
+                }
+                else {
+                    move('Y', search_position[1]);
+                }
+                found_energy = true;
+                return found_energy;
+            }
+        }
+    }
+    return found_energy;
+}
+
+
 void BasicAgent::seek_energy() {
     bool found_energy = false;
 
@@ -136,45 +184,8 @@ void BasicAgent::seek_energy() {
     int search_radius = 1;
     while (!found_energy) {
 
-        //Generates all the positions on the board in which to search for energy
-        //Note: positions are relative to current position (centered at (0, 0))
-        vector <vector <int>> search_positions;
-        for (int i=-search_radius; i<search_radius+1; i++) {
-            for (int j=-search_radius; j<search_radius+1; j++) {    
-                //Ensures that only 'new' tiles get searched
-                if (abs(i) == search_radius or abs(j) == search_radius){
-                    //Ensures that only tiles in bounds get searched
-                    if (i+y_pos > 0 and j+x_pos > 0) {
-                        vector <int> search_position = {j, i};
-                        search_positions.push_back(search_position);
-                    }
-                }   
-                
-            }
-        }
-
-        //If finds any energies within the selected radius, moves towards it
-        //Note: at present, doesn't attempt to move around obstacles (something for more advanced agent)
-        for (vector<int> search_position: search_positions) {
-            int x_search_position = search_position[0] + x_pos - 1;
-            int y_search_position = search_position[1] + y_pos - 1;
-            //Ensures that agent doesn't try to search out of bounds
-            if (y_search_position >= 0 and y_search_position < y_bound and x_search_position >= 0 and x_search_position < x_bound) {
-                char tile_value = environment_tiles[y_search_position][x_search_position];
-                if (tile_value == 'E') {
-                    //If energy lies somewhere different on X-plane, move in that direction 
-                    //and, if not diagonal from the agent, moves onto the energy; otherwise, moves on Y-plane
-                    if (search_position[0] != 0) {
-                        move('X', search_position[0]);
-                    }
-                    else {
-                        move('Y', search_position[1]);
-                    }
-                    found_energy = true;
-                    break;
-                }
-            }
-        }
+        vector <vector <int>> search_positions = generate_search_positions(search_radius);
+        found_energy = move_to_energy(search_positions);
         ++search_radius;
 
         //If the agent can't find any more energy on the board, gives up on seeking energy

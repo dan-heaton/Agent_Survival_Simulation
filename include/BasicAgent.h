@@ -24,6 +24,8 @@ class BasicAgent {
         void state_position(char dimension, int move_size);
         int check_path(char direction, int new_pos);
         int check_bounds(int bound, int new_pos);
+        vector <vector <int>> generate_search_positions(int search_radius);
+        bool move_to_energy(vector <vector <int>> search_positions);
 
     public:  
         BasicAgent(string message, int x_bound=100, int y_bound=100);
