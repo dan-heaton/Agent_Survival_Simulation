@@ -6,6 +6,7 @@
         "typeinfo": "cpp",
         "vector": "cpp",
         "filesystem": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "algorithm": "cpp"
     }
 }

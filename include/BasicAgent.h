@@ -12,18 +12,20 @@ class BasicAgent {
         string name;
         int x_pos;
         int y_pos;
-        int x_bound;
-        int y_bound;
         int energy = 0;
-        //Unknown until it's initialised into a BasicEnvironment
-        vector <vector <char>> environment_tiles;
         vector <vector <int>> energies_consumed;
         bool is_environ_set = false;
         friend class BasicEnvironment;
-
         void state_position(char dimension, int move_size);
         int check_path(char direction, int new_pos);
         int check_bounds(int bound, int new_pos);
+
+    protected:
+        //Below needs to be seen by 'AdvancedAgent' when redefining 'seek_energy()'
+        int x_bound;
+        int y_bound;
+        //Unknown until it's initialised into a BasicEnvironment
+        vector <vector <char>> environment_tiles;
         vector <vector <int>> generate_search_positions(int search_radius);
         bool move_to_energy(vector <vector <int>> search_positions);
 

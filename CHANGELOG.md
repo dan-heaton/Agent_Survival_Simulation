@@ -1,6 +1,8 @@
 ## 0.1.10 - 25/01/21
 - Separated 'seek_energy()' of BasicAgent into several subroutines, which should make constructing AdvancedAgent's 
 redefined 'seek_energy()' easier to implement
+- Implemented behaviour in AdvancedAgent to move around obstacles during 'seek_energy()' rather than 'leaping' over them (WIP though, 
+as can get stuck in a loop)
 
 ## 0.1.9 - 23/01/21
 - Improved 'tasks.json' to include all .cpp files automatically, and made 'BasicAgent::state_position()' private (as already used privately)
