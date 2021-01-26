@@ -37,6 +37,7 @@ class BasicAgent {
         virtual void seek_energy();
         int get_x_pos();
         int get_y_pos();
+        string get_name();
 };
 
 

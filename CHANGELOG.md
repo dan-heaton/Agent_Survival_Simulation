@@ -1,3 +1,7 @@
+## 0.1.11 - 26/01/21
+- Improvements to AdvancedAgent's 'seek_energy()' function to (seemingly) no longer 'leap' over obstacles, but now gets stuck very 
+easily (need to implement either random behaviour in this case to break out, or implement lookahead; WIP)
+
 ## 0.1.10 - 25/01/21
 - Separated 'seek_energy()' of BasicAgent into several subroutines, which should make constructing AdvancedAgent's 
 redefined 'seek_energy()' easier to implement

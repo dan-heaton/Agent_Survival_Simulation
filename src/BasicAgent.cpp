@@ -210,3 +210,7 @@ int BasicAgent::get_x_pos() {
 int BasicAgent::get_y_pos() {
     return y_pos;
 }
+
+string BasicAgent::get_name() {
+    return name;
+}
