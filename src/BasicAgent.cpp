@@ -30,7 +30,12 @@ int BasicAgent::check_path(char direction, int new_pos) {
             if (environment_tiles[y_pos-1][i-1] == 'O') {
                 cout << "Agent '" << name << "' encountered obstacle at (" << i << ", " << y_pos << "); stopping here..." << endl;
                 // Stops the square before the obstacle
-                return i-1;
+                if (new_pos > x_pos) {
+                    return i-1;
+                }
+                else {
+                    return i+1;
+                }
             }
             else if (environment_tiles[y_pos-1][i-1] == 'E') {
                 cout << "Agent '" << name << "' encountered energy at (" << i << ", " << y_pos << "); consuming and continuing..." << endl;
@@ -54,7 +59,13 @@ int BasicAgent::check_path(char direction, int new_pos) {
             if (environment_tiles[i-1][x_pos-1] == 'O') {
                 cout << "Agent '" << name << "' encountered obstacle at (" << x_pos << ", " << i << "); stopping here..." << endl;
                 // Stops the square before the obstacle
-                return i-1;
+                if (new_pos > y_pos) {
+                    return i-1;
+                }
+                else {
+                    return i+1;
+                }
+                
             }
             else if (environment_tiles[i-1][x_pos-1] == 'E') {
                 cout << "Agent '" << name << "' encountered energy at (" << x_pos << ", " << i << "); consuming and continuing..." << endl;

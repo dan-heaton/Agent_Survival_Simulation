@@ -1,3 +1,7 @@
+## 0.1.12 - 27/01/21
+- Fixed bug w/ BasicAgent's 'check_path()', which would result in causing the agent to leap over an obstacle when approaching 
+it in a negative direction
+
 ## 0.1.11 - 26/01/21
 - Improvements to AdvancedAgent's 'seek_energy()' function to (seemingly) no longer 'leap' over obstacles, but now gets stuck very 
 easily (need to implement either random behaviour in this case to break out, or implement lookahead; WIP)
