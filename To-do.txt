@@ -1,4 +1,3 @@
-- Add 'AdvancedAgent' class into separate cpp/header, to have more advanced 'seek_energy()' behaviour (including avoid obstacles)
 - Add to 'AdvancedAgent' more attributes (e.g. speed, energy_to_replicate) that is randomised upon creation
 - Add to 'AdvancedAgent' ability to replicate upon reaching a specific energy, along with how these are created and added to simulation
 - Add 'Predator' class to seek out 'AdvancedAgent's, whom in turn try to avoid the former
@@ -8,3 +7,4 @@
 - Improve AdvancedAgent 'seek_energy()' behaviour to take value of energy into account
 - Write Python script to analyse .csv output files + produces metrics (e.g. avg energies consumed per move)
 - Write Python script to produce separate window as running simulation
+- Implement 'seek_energy()' with lookahead behaviour (i.e. to seek energies that require more than 1 move to reach)

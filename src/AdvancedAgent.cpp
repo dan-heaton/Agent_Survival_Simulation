@@ -70,17 +70,46 @@ vector <vector <int>> AdvancedAgent::remove_search_positions(vector <vector <int
 }
 
 
+void AdvancedAgent::break_out_loop(vector <int> current_position) {
+
+    bool have_moved = false;
+    while (!have_moved) {
+        int previous_x_pos = get_x_pos();
+        int previous_y_pos = get_y_pos();
+        move_random();
+        //Ensures that we keep trying to make a random move even if current one is blocked
+        if (previous_x_pos != get_x_pos() or previous_y_pos != get_y_pos()) {
+            have_moved = true;
+        }
+        else {
+            cout << "random move path is blocked, trying again..." << endl;
+        }
+    }
+    previous_positions.push_back(current_position);
+}
+
+
 void AdvancedAgent::seek_energy() {
     //Resets 'blocked_directions' so agent will explore all avenues from current position
     blocked_directions.clear();
 
-    bool found_energy = false;
+    //If determined to be in a loop (i.e. same position as previous time 'seek_energy()' was called), 
+    //forcefully breaks out by moving in a random direction and magnitude
+    vector <int> current_position = {get_x_pos(), get_y_pos()};
+    if (previous_positions.size() > 0) {
+        if (equal(previous_positions.back().begin(), previous_positions.back().end(), current_position.begin())) {
+            break_out_loop(current_position);
+            //The above does the move for the turn, so don't want to move again on same 'seek_energy()' call
+            return;
+        }
+    }
+    previous_positions.push_back(current_position);
 
+
+    bool found_energy = false;
     //Looks for energy within 'search_radius' tiles and, if none found, expands the search
     int search_radius = 1;
     while (!found_energy) {
-
-        cout << "Agent '" << get_name() << "' looking with search radius " << search_radius << "..." << endl;
 
         vector <vector <int>> search_positions = generate_search_positions(search_radius);
         find_blocked_directions(search_positions);
