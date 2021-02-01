@@ -1,10 +1,9 @@
-- Add to 'AdvancedAgent' more attributes (e.g. speed, energy_to_replicate) that is randomised upon creation
-- Add to 'AdvancedAgent' ability to replicate upon reaching a specific energy, along with how these are created and added to simulation
-- Add 'Predator' class to seek out 'AdvancedAgent's, whom in turn try to avoid the former
-- Make other resources part of environment (e.g. protection from predators) and modify AdvancedAgent behaviour to seek these too
+- Improve 'Predator' 'seek_agent()' behaviour
+- Move settings of simulation to config file + change simulation to use that instead of passed-in arguments
+- Setup 'ReplicationAgent' class to inherit from 'AdvancedAgent' with more attributes (e.g. speed, energy_to_replicate) that is randomised upon creation
+- Improve 'ReplicationAgent' 'seek_energy()' behaviour to take value of energy into account
+- Improve 'ReplicationAgent' 'seek_energy()' with lookahead behaviour (i.e. to seek energies that require more than 1 move to reach)
+- Add to 'ReplicationAgent' ability to replicate upon reaching a specific energy, along with how these are created and added to simulation
+- Improve 'ReplicationAgent' 'replicate()' to use aspects of crossover/mutation
 - Implement 'DynamicEnvironment', with random destructive events to environment (e.g. destroys certain agents/obstacles) + implement in simulation
-- Improve AdvancedAgent replication to use aspects of crossover/mutation
-- Improve AdvancedAgent 'seek_energy()' behaviour to take value of energy into account
 - Write Python script to analyse .csv output files + produces metrics (e.g. avg energies consumed per move)
-- Write Python script to produce separate window as running simulation
-- Implement 'seek_energy()' with lookahead behaviour (i.e. to seek energies that require more than 1 move to reach)

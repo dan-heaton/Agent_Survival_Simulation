@@ -4,6 +4,7 @@
 #include <list>
 #include <vector>
 #include "BasicAgent.h"
+#include "Predator.h"
 
 using namespace std;
 
@@ -29,6 +30,7 @@ class BasicEnvironment {
         list <Obstacle> obstacles;
         list <Energy> energy_sources;
         list <BasicAgent*> agent_ptrs;
+        list <Predator*> predator_ptrs;
         vector <vector <char>> environment_tiles;
         int x_bound;
         int y_bound;
@@ -41,6 +43,7 @@ class BasicEnvironment {
         void state_objects();
         void visualise();
         void insert_agent(BasicAgent *agent);
+        void insert_predator(Predator *predator);
         void update();
         int number_energies_remaining();
         list <Obstacle> get_obstacles();

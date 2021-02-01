@@ -10,6 +10,7 @@ int main() {
     int x_bound = 15;
     int y_bound = 15;
     int num_agents = 1;
+    int num_predators = 1;
     int num_obstacles = 20;
     int num_energies = 20;
     bool seek_energy = true;
@@ -19,6 +20,6 @@ int main() {
     // If set false, uses BasicAgent; otherwise, uses AdvancedAgent
     bool use_advanced_agents = true;
 
-    Simulation sim(time_steps, x_bound, y_bound, num_agents, num_obstacles, num_energies, seek_energy, output_csv, use_advanced_agents);
+    Simulation sim(time_steps, x_bound, y_bound, num_agents, num_predators, num_obstacles, num_energies, seek_energy, output_csv, use_advanced_agents);
     sim.run_simulation(time_delay);
 }

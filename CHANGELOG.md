@@ -1,3 +1,8 @@
+## 0.1.13 - 01/02/21
+- Basic implementation of Predator class (w/ .cpp and .h files)
+- Modifications of main and simulation to recognise this new class
+- Organised 'To-do.txt'
+
 ## 0.1.12 - 27/01/21
 - Fixed bug w/ BasicAgent's 'check_path()', which would result in causing the agent to leap over an obstacle when approaching 
 it in a negative direction

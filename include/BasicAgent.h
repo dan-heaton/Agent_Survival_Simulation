@@ -15,6 +15,7 @@ class BasicAgent {
         int energy = 0;
         vector <vector <int>> energies_consumed;
         bool is_environ_set = false;
+        bool is_dead = false;
         friend class BasicEnvironment;
         void state_position(char dimension, int move_size);
         int check_path(char direction, int new_pos);

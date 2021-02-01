@@ -12,10 +12,10 @@ using namespace std;
 
 
 Simulation::Simulation(int time_steps, int x_bound, int y_bound, 
-                       int num_agents, int num_obstacles, int num_energies, 
+                       int num_agents, int num_predators, int num_obstacles, int num_energies, 
                        bool seek_energy, bool output_csv, bool use_advanced_agents) 
                        :time_steps(time_steps), x_bound(x_bound), y_bound(y_bound), 
-                       num_agents(num_agents), num_obstacles(num_obstacles), num_energies(num_energies), 
+                       num_agents(num_agents), num_predators(num_predators), num_obstacles(num_obstacles), num_energies(num_energies), 
                        seek_energy(seek_energy), output_csv(output_csv), use_advanced_agents(use_advanced_agents) {
 
                            if (output_csv) {
@@ -45,7 +45,8 @@ void Simulation::output_csv_row(vector <string> outputs) {
 void Simulation::initialise_csv(BasicEnvironment environment, vector <BasicAgent*> agent_ptrs) {
 
     //Sets up 1st line for initial settings headers
-    vector <string> first_outputs = {"Time Steps", "X-bound", "Y-bound", "# Agents", "# Obstacles", "# Energies", "Seek Energy?", "Advanced Agents?"};
+    vector <string> first_outputs = {"Time Steps", "X-bound", "Y-bound", "# Agents", "# Predators", 
+                                     "# Obstacles", "# Energies", "Seek Energy?", "Advanced Agents?"};
     for (int i=0; i<num_obstacles; i++) {
         for (char dimension: vector <char> {'X', 'Y'}) {
             first_outputs.push_back("Obstacle " + to_string(i+1) + " " + dimension + "-Pos");
@@ -60,7 +61,7 @@ void Simulation::initialise_csv(BasicEnvironment environment, vector <BasicAgent
 
     //Sets up 2nd line for initial settings
     vector <string> second_outputs = {to_string(time_steps), to_string(x_bound), to_string(y_bound), to_string(num_agents), 
-                                      to_string(num_obstacles), to_string(num_energies), 
+                                      to_string(num_predators), to_string(num_obstacles), to_string(num_energies), 
                                       seek_energy ? "true": "false", use_advanced_agents? "true": "false"};
     for (Obstacle obst: environment.get_obstacles()) {
         second_outputs.insert(second_outputs.end(), {to_string(obst.x_pos), to_string(obst.y_pos)});
@@ -75,6 +76,11 @@ void Simulation::initialise_csv(BasicEnvironment environment, vector <BasicAgent
     for (int i=0; i<num_agents; i++) {
         for (char dimension: vector <char> {'X', 'Y'}) {
             third_outputs.push_back("Agent " + to_string(i+1) + " " + dimension + "-Pos");
+        }
+    }
+    for (int i=0; i<num_predators; i++) {
+        for (char dimension: vector <char> {'X', 'Y'}) {
+            third_outputs.push_back("Predator " + to_string(i+1) + " " + dimension + "-Pos");
         }
     }
     output_csv_row(third_outputs);
@@ -97,7 +103,7 @@ void Simulation::run_simulation(int time_delay) {
     vector <BasicAgent*> agent_ptrs;
     for (int i=0; i<num_agents; i++) {
         string agent_name = "Agent " + to_string(i+1);
-        //Creates a new agent point from either BasicAgent or AdvancedAgent, and uses polymorphism to call
+        //Creates a new agent pointer from either BasicAgent or AdvancedAgent, and uses polymorphism to call
         //each class' respective 'seek_energy()' funtion
         BasicAgent* agent_ptr;
         if (use_advanced_agents) {
@@ -111,6 +117,18 @@ void Simulation::run_simulation(int time_delay) {
         environment.insert_agent(agent_ptr);
         agent_ptrs.push_back(agent_ptr);
     }
+
+    // Creates all predators and inserts them into the environment
+    vector <Predator*> predator_ptrs;
+    for (int i=0; i<num_predators; i++) {
+        string predator_name = "Predator " + to_string(i+1);
+        // Needs dynamic allocation to ensure objects survive out of the 'for' scope
+        Predator* predator_ptr = new Predator(predator_name, x_bound, y_bound);
+        environment.insert_predator(predator_ptr);
+        predator_ptrs.push_back(predator_ptr);
+    }
+
+
     environment.visualise();
 
 
@@ -120,7 +138,7 @@ void Simulation::run_simulation(int time_delay) {
         initialise_csv(environment, agent_ptrs);
     }
 
-    // For the required number of time steps, have all agents move randomly across the board
+    // For the required number of time steps, have all agents and predators move across the board
     for (int i=0; i<time_steps; i++) {
         //Delays output of new board so shows running in 'real-time' if necessary
         sleep(time_delay);
@@ -134,6 +152,10 @@ void Simulation::run_simulation(int time_delay) {
                 agent_ptr->move_random();
             }
             outputs.insert(outputs.end(), {to_string(agent_ptr->get_x_pos()), to_string(agent_ptr->get_y_pos())});
+        }
+        for (Predator* predator_ptr: predator_ptrs) {
+            predator_ptr->seek_agent();
+            outputs.insert(outputs.end(), {to_string(predator_ptr->get_x_pos()), to_string(predator_ptr->get_y_pos())});
         }
         environment.update();
         environment.visualise();

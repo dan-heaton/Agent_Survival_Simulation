@@ -93,7 +93,11 @@ int BasicAgent::check_bounds(int bound, int new_pos) {
 
 void BasicAgent::move(char direction, int move_amount) {
     if (!is_environ_set) {
-        cout << "Agent '" << name << "' can't move if environment is unknown..." << endl;
+        cout <<  name << "' can't move if environment is unknown..." << endl;
+        return;
+    }
+    if (is_dead) {
+        cout << name << "' has been eaten and can no longer move..." << endl;
         return;
     }
     int new_pos;
@@ -208,7 +212,7 @@ void BasicAgent::seek_energy() {
 
 
 void BasicAgent::state_position(char dimension, int move_size) {
-    cout << "BasicAgent '"<<  name << "' moved " << move_size << " units on " << dimension << 
+    cout << name << "' moved " << move_size << " units on " << dimension << 
     "-axis to new position (" << x_pos << ", " << y_pos << ")" << endl;
 }
 
