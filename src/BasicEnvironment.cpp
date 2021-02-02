@@ -99,7 +99,7 @@ void BasicEnvironment::insert_predator(Predator *predator){
     predator_ptrs.push_back(predator);
     environment_tiles[predator->y_pos - 1][predator->x_pos - 1] = 'P';
 
-    // Updates each agent's knowledge of environment when a new agent is inserted into one
+    // Updates each predator's knowledge of environment when a new agent is inserted into one
     for (Predator *pred: predator_ptrs) {
         pred->environment_tiles = environment_tiles;
         pred->is_environ_set = true;
@@ -118,6 +118,20 @@ void BasicEnvironment::update() {
                 environment_tiles[i][j] = '-';
             }
         }
+    }
+
+    // Adds the new predators onto the tiles
+    for (Predator *pred: predator_ptrs) {
+        if (environment_tiles[pred->y_pos-1][pred->x_pos-1] == 'A') {
+            cout << "Predator '" << pred->name << "' found agent at (" << pred->x_pos << ", " << pred->y_pos << ") and has eaten it!" << endl;
+            // Finds the agent which has been eaten and set it to be dead
+            for (BasicAgent *agnt: agent_ptrs) {
+                if (agnt->x_pos == pred->x_pos and agnt->y_pos == pred->y_pos) {
+                    agnt->is_dead = true;
+                }
+            }
+        }
+        environment_tiles[pred->y_pos-1][pred->x_pos-1] = 'P';
     }
 
     // Adds the new agents onto the tiles
@@ -141,19 +155,6 @@ void BasicEnvironment::update() {
             }
         }
         agnt->energies_consumed.clear();
-    }
-    // Adds the new predators onto the tiles
-    for (Predator *pred: predator_ptrs) {
-        if (environment_tiles[pred->y_pos-1][pred->x_pos-1] == 'A') {
-            cout << "Predator '" << pred->name << "' found agent at (" << pred->x_pos << ", " << pred->y_pos << ") and has eaten it!" << endl;
-            // Finds the agent which has been eaten and set it to be dead
-            for (BasicAgent *agnt: agent_ptrs) {
-                if (agnt->x_pos == pred->x_pos and agnt->y_pos == pred->y_pos) {
-                    agnt->is_dead = true;
-                }
-            }
-        }
-        environment_tiles[pred->y_pos-1][pred->x_pos-1] = 'P';
     }
 }
 

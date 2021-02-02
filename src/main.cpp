@@ -11,7 +11,7 @@ int main() {
     int y_bound = 15;
     int num_agents = 1;
     int num_predators = 1;
-    int num_obstacles = 20;
+    int num_obstacles = 0;
     int num_energies = 20;
     bool seek_energy = true;
     bool output_csv = true;

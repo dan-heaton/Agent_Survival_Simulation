@@ -144,6 +144,11 @@ void Simulation::run_simulation(int time_delay) {
         sleep(time_delay);
 
         vector <string> outputs;
+        for (Predator* predator_ptr: predator_ptrs) {
+            predator_ptr->seek_agent();
+            outputs.insert(outputs.end(), {to_string(predator_ptr->get_x_pos()), to_string(predator_ptr->get_y_pos())});
+        }
+
         for (BasicAgent* agent_ptr: agent_ptrs) {
             if (seek_energy) {
                 agent_ptr->seek_energy();
@@ -153,10 +158,7 @@ void Simulation::run_simulation(int time_delay) {
             }
             outputs.insert(outputs.end(), {to_string(agent_ptr->get_x_pos()), to_string(agent_ptr->get_y_pos())});
         }
-        for (Predator* predator_ptr: predator_ptrs) {
-            predator_ptr->seek_agent();
-            outputs.insert(outputs.end(), {to_string(predator_ptr->get_x_pos()), to_string(predator_ptr->get_y_pos())});
-        }
+
         environment.update();
         environment.visualise();
         outputs.insert(outputs.begin(), {to_string(i+1), to_string(environment.number_energies_remaining())});

@@ -1,3 +1,7 @@
+## 0.1.14 - 02/02/21
+- Further work on Predator class 'seek_agent()' behaviour (inheriting much from BasicAgent but still not updating own model of 
+environment correctly; should probably revert to NOT being inherited from BasicAgent; WIP)
+
 ## 0.1.13 - 01/02/21
 - Basic implementation of Predator class (w/ .cpp and .h files)
 - Modifications of main and simulation to recognise this new class
