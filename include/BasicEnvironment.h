@@ -42,8 +42,7 @@ class BasicEnvironment {
         BasicEnvironment(int x_bound, int y_bound, int num_obstacles, int num_energy_sources);
         void state_objects();
         void visualise();
-        void insert_agent(BasicAgent *agent);
-        void insert_predator(Predator *predator);
+        void insert_predators_agents(vector <Predator*> predators, vector <BasicAgent*> agents);
         void update();
         int number_energies_remaining();
         list <Obstacle> get_obstacles();

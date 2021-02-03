@@ -1,3 +1,7 @@
+## 0.1.15 - 03/02/21
+- Modified environment to initialse all predators and agents together at the same time (rather than doing so individually) 
+so they are all aware of each other's existence from the beginning
+
 ## 0.1.14 - 02/02/21
 - Further work on Predator class 'seek_agent()' behaviour (inheriting much from BasicAgent but still not updating own model of 
 environment correctly; should probably revert to NOT being inherited from BasicAgent; WIP)

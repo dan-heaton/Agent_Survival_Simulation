@@ -82,27 +82,36 @@ void BasicEnvironment::visualise(){
     }
     cout << endl << endl;
 }
-        
-void BasicEnvironment::insert_agent(BasicAgent *agent){
-    agent_ptrs.push_back(agent);
-    environment_tiles[agent->y_pos - 1][agent->x_pos - 1] = 'A';
 
-    // Updates each agent's knowledge of environment when a new agent is inserted into one
-    for (BasicAgent *agnt: agent_ptrs) {
-        agnt->environment_tiles = environment_tiles;
-        agnt->is_environ_set = true;
+
+void BasicEnvironment::insert_predators_agents(vector <Predator*> predators, vector <BasicAgent*> agents) {
+    vector <vector <int>> predator_positions;
+    vector <vector <int>> agent_positions;
+    
+    //Adds each predator and agent to the environment and stores their respective initialisation positions in separate lists
+    for (Predator* predator: predators) {
+        predator_ptrs.push_back(predator);
+        predator_positions.push_back(vector <int> {predator->x_pos, predator->y_pos});
     }
-}
+    for (BasicAgent* agent: agents) {
+        agent_ptrs.push_back(agent);
+        agent_positions.push_back(vector <int> {agent->x_pos, agent->y_pos});
+    }
 
+    // Updates the environment's tile layout with the exact positions of each predator and agent
+    for (vector <int> predator_position: predator_positions) {
+            environment_tiles[predator_position[1] - 1][predator_position[0] - 1] = 'P';
+    }
+    for (vector <int> agent_position: agent_positions) {
+        environment_tiles[agent_position[1] - 1][agent_position[0] - 1] = 'A';
+    }
 
-void BasicEnvironment::insert_predator(Predator *predator){
-    predator_ptrs.push_back(predator);
-    environment_tiles[predator->y_pos - 1][predator->x_pos - 1] = 'P';
-
-    // Updates each predator's knowledge of environment when a new agent is inserted into one
-    for (Predator *pred: predator_ptrs) {
-        pred->environment_tiles = environment_tiles;
-        pred->is_environ_set = true;
+    // Updates each predator's and agent's knowledge of environment given the inserted predators/agents into the environment
+    for (Predator* predator: predators) {
+        predator->environment_tiles = environment_tiles;
+    }
+    for (BasicAgent* agent: agents) {
+        agent->environment_tiles = environment_tiles;
     }
 }
 
