@@ -12,6 +12,9 @@ class BasicAgent {
         string name;
         int x_pos;
         int y_pos;
+        //Used to determine when caught by predator
+        int prev_x_pos;
+        int prev_y_pos;
         int energy = 0;
         vector <vector <int>> energies_consumed;
         bool is_environ_set = false;
@@ -39,6 +42,7 @@ class BasicAgent {
         int get_x_pos();
         int get_y_pos();
         string get_name();
+        bool get_is_dead();
 };
 
 

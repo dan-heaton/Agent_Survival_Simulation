@@ -1,6 +1,9 @@
 ## 0.1.15 - 03/02/21
 - Modified environment to initialse all predators and agents together at the same time (rather than doing so individually) 
 so they are all aware of each other's existence from the beginning
+- Modified 'BasicEnvironment::update()' to reflect what to do when a predator catches an agent and modified simulation to 
+get rid of any dead agents on the board
+- Implemented Predator as separate class not inheriting from BasicAgent
 
 ## 0.1.14 - 02/02/21
 - Further work on Predator class 'seek_agent()' behaviour (inheriting much from BasicAgent but still not updating own model of 

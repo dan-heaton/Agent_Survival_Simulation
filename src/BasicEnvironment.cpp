@@ -112,6 +112,7 @@ void BasicEnvironment::insert_predators_agents(vector <Predator*> predators, vec
     }
     for (BasicAgent* agent: agents) {
         agent->environment_tiles = environment_tiles;
+        agent->is_environ_set = true;
     }
 }
 
@@ -129,15 +130,13 @@ void BasicEnvironment::update() {
         }
     }
 
-    // Adds the new predators onto the tiles
+    // Adds the new predators onto the tiles and registers any eaten agents
     for (Predator *pred: predator_ptrs) {
-        if (environment_tiles[pred->y_pos-1][pred->x_pos-1] == 'A') {
-            cout << "Predator '" << pred->name << "' found agent at (" << pred->x_pos << ", " << pred->y_pos << ") and has eaten it!" << endl;
-            // Finds the agent which has been eaten and set it to be dead
-            for (BasicAgent *agnt: agent_ptrs) {
-                if (agnt->x_pos == pred->x_pos and agnt->y_pos == pred->y_pos) {
-                    agnt->is_dead = true;
-                }
+        // Finds any agent which has been eaten and set it to be dead
+        for (BasicAgent *agnt: agent_ptrs) {
+            if (agnt->prev_x_pos == pred->x_pos and agnt->prev_y_pos == pred->y_pos) {
+                cout << "Predator '" << pred->name << "' found agent at (" << pred->x_pos << ", " << pred->y_pos << ") and has eaten it!" << endl;
+                agnt->is_dead = true;
             }
         }
         environment_tiles[pred->y_pos-1][pred->x_pos-1] = 'P';
@@ -145,25 +144,35 @@ void BasicEnvironment::update() {
 
     // Adds the new agents onto the tiles
     for (BasicAgent *agnt: agent_ptrs) {
-        environment_tiles[agnt->y_pos-1][agnt->x_pos-1] = 'A';
-
-        // For any energies the agent has recently consumed, update their own energy value 
-        // and gets rid of the energy on the board
-        for (vector<int> energy_consumed: agnt->energies_consumed) {
-            for (Energy &energy_source: energy_sources) {
-                if (energy_source.x_pos-1 == energy_consumed[1] and energy_source.y_pos-1 == energy_consumed[0] and !energy_source.is_consumed) {
-                    agnt->energy += energy_source.energy_val;
-                    cout << "Agent '" << agnt->name << "' received " << energy_source.energy_val << " energy; now has " << agnt->energy << " energy" << endl;
-                    // Ensures that if the agent has stopped on the location of the energy we don't overwrite it's own icon on the tiles
-                    if (environment_tiles[energy_source.y_pos-1][energy_source.x_pos-1] != 'A') {
-                        environment_tiles[energy_source.y_pos-1][energy_source.x_pos-1] = '-';
+        if (!(agnt->is_dead)) {
+            environment_tiles[agnt->y_pos-1][agnt->x_pos-1] = 'A';
+            // For any energies the agent has recently consumed, update their own energy value 
+            // and gets rid of the energy on the board
+            for (vector<int> energy_consumed: agnt->energies_consumed) {
+                for (Energy &energy_source: energy_sources) {
+                    if (energy_source.x_pos-1 == energy_consumed[1] and energy_source.y_pos-1 == energy_consumed[0] and !energy_source.is_consumed) {
+                        agnt->energy += energy_source.energy_val;
+                        cout << "Agent '" << agnt->name << "' received " << energy_source.energy_val 
+                                << " energy; now has " << agnt->energy << " energy" << endl;
+                        // Ensures that if the agent has stopped on the location of the energy we don't overwrite it's own icon on the tiles
+                        if (environment_tiles[energy_source.y_pos-1][energy_source.x_pos-1] != 'A') {
+                            environment_tiles[energy_source.y_pos-1][energy_source.x_pos-1] = '-';
+                        }
+                        energy_source.is_consumed = true;
+                        break;
                     }
-                    energy_source.is_consumed = true;
-                    break;
                 }
             }
+            agnt->energies_consumed.clear();
         }
-        agnt->energies_consumed.clear();
+    }
+
+    // Updates each predator and agent's local copy of the environment tiles to ensure they are all have 'up-to-date' environment info
+    for (Predator *pred: predator_ptrs) {
+        pred->environment_tiles = environment_tiles;
+    }
+    for (BasicAgent *agnt: agent_ptrs) {
+        agnt->environment_tiles = environment_tiles;
     }
 }
 

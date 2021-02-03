@@ -99,7 +99,16 @@ void Simulation::run_simulation(int time_delay) {
 
     BasicEnvironment environment(x_bound, y_bound, num_obstacles, num_energies);
 
-    // Creates all agents and inserts them into the environment
+    // Creates all predators
+    vector <Predator*> predator_ptrs;
+    for (int i=0; i<num_predators; i++) {
+        string predator_name = "Predator " + to_string(i+1);
+        // Needs dynamic allocation to ensure objects survive out of the 'for' scope
+        Predator* predator_ptr = new Predator(predator_name, x_bound, y_bound);
+        predator_ptrs.push_back(predator_ptr);
+    }
+
+    // Creates all agents
     vector <BasicAgent*> agent_ptrs;
     for (int i=0; i<num_agents; i++) {
         string agent_name = "Agent " + to_string(i+1);
@@ -113,24 +122,12 @@ void Simulation::run_simulation(int time_delay) {
             // Needs dynamic allocation to ensure objects survive out of the 'for' scope
             agent_ptr = new BasicAgent(agent_name, x_bound, y_bound);            
         }
-
-        environment.insert_agent(agent_ptr);
         agent_ptrs.push_back(agent_ptr);
     }
 
-    // Creates all predators and inserts them into the environment
-    vector <Predator*> predator_ptrs;
-    for (int i=0; i<num_predators; i++) {
-        string predator_name = "Predator " + to_string(i+1);
-        // Needs dynamic allocation to ensure objects survive out of the 'for' scope
-        Predator* predator_ptr = new Predator(predator_name, x_bound, y_bound);
-        environment.insert_predator(predator_ptr);
-        predator_ptrs.push_back(predator_ptr);
-    }
-
-
+    // Inserts all predators and agents into the environment and show the initial visualisation (time = 0)
+    environment.insert_predators_agents(predator_ptrs, agent_ptrs);
     environment.visualise();
-
 
     //Sets up the inital .csv output file w/ 1st line for initial settings headers, 2nd for initial settings, 
     //3rd for other headers, and 4th for time 0 setting
@@ -161,6 +158,19 @@ void Simulation::run_simulation(int time_delay) {
 
         environment.update();
         environment.visualise();
+
+        //Gets rid of any agents that have been killed by a predator
+        vector <BasicAgent*> surviving_agent_ptrs;
+        for (BasicAgent* agent_ptr : agent_ptrs) {
+            if (!(agent_ptr->get_is_dead())) {
+                surviving_agent_ptrs.push_back(agent_ptr);
+            }
+            else {
+                cout << agent_ptr->get_name() << " is dead; removing from the simulation..." << endl;
+            }
+        }
+        agent_ptrs = surviving_agent_ptrs;
+
         outputs.insert(outputs.begin(), {to_string(i+1), to_string(environment.number_energies_remaining())});
 
         //Output the simulation state at time 'i+1' to the output .csv

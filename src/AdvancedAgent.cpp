@@ -81,9 +81,6 @@ void AdvancedAgent::break_out_loop(vector <int> current_position) {
         if (previous_x_pos != get_x_pos() or previous_y_pos != get_y_pos()) {
             have_moved = true;
         }
-        else {
-            cout << "random move path is blocked, trying again..." << endl;
-        }
     }
     previous_positions.push_back(current_position);
 }

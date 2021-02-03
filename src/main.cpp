@@ -14,7 +14,7 @@ int main() {
     int num_obstacles = 0;
     int num_energies = 20;
     bool seek_energy = true;
-    bool output_csv = true;
+    bool output_csv = false;
     //In seconds
     int time_delay = 1;
     // If set false, uses BasicAgent; otherwise, uses AdvancedAgent
