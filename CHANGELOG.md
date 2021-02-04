@@ -1,3 +1,6 @@
+## 0.1.16 - 04/02/21
+- Move settings of simulation to config file + change simulation to use that instead of passed-in arguments
+
 ## 0.1.15 - 03/02/21
 - Modified environment to initialse all predators and agents together at the same time (rather than doing so individually) 
 so they are all aware of each other's existence from the beginning

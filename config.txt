@@ -1,0 +1,10 @@
+time_steps = 50
+x_bound = 15
+y_bound = 15
+num_agents = 1
+num_predators = 1
+num_obstacles = 0
+num_energies = 20
+seek_energy = true
+output_csv = false
+use_advanced_agents = true

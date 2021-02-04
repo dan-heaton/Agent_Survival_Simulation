@@ -11,22 +11,45 @@
 using namespace std;
 
 
-Simulation::Simulation(int time_steps, int x_bound, int y_bound, 
-                       int num_agents, int num_predators, int num_obstacles, int num_energies, 
-                       bool seek_energy, bool output_csv, bool use_advanced_agents) 
-                       :time_steps(time_steps), x_bound(x_bound), y_bound(y_bound), 
-                       num_agents(num_agents), num_predators(num_predators), num_obstacles(num_obstacles), num_energies(num_energies), 
-                       seek_energy(seek_energy), output_csv(output_csv), use_advanced_agents(use_advanced_agents) {
+Simulation::Simulation() {
 
-                           if (output_csv) {
-                               //Generates timedate as string in format "YYYY-MM-DD-HH-MM-SS" to use in file name
-                                time_t t = std::time(0);
-                                tm* now = std::localtime(&t);
-                                file_suffix = to_string(now->tm_year + 1900) + '-' + to_string(now->tm_mon + 1) + '-' 
-                                              + to_string(now->tm_mday) + '-' + to_string(now->tm_hour) + '-' 
-                                              + to_string(now->tm_min) + '-' + to_string(now->tm_sec);
-                           }
-                       }
+    ifstream file("config.txt");
+
+    //Makes mapping of simulation attributes to their respective attribute values
+    map <string, string> config_pairs;
+    string config_line;
+    while (getline(file, config_line))
+    {
+        //All attributes to attribute values are expecting the exact delimiter below (otherwise, will cause error)
+        string line_delim = " = ";
+        int equals_pos = config_line.find(line_delim);
+        string attr = config_line.substr(0, equals_pos);
+        string attr_val = config_line.substr(equals_pos + line_delim.size(), config_line.size());
+        config_pairs[attr] = attr_val;
+    }
+
+    //Initialises all model attributes from the configuration mapping 
+    time_steps = stoi(config_pairs["time_steps"]);
+    x_bound = stoi(config_pairs["x_bound"]);
+    y_bound = stoi(config_pairs["y_bound"]);
+    num_agents = stoi(config_pairs["num_agents"]);
+    num_predators = stoi(config_pairs["num_predators"]);
+    num_obstacles = stoi(config_pairs["num_obstacles"]);
+    num_energies = stoi(config_pairs["num_energies"]);
+    seek_energy = (config_pairs["seek_energy"] == "true") ? true : false;
+    output_csv = (config_pairs["output_csv"] == "true") ? true : false;
+    use_advanced_agents = (config_pairs["use_advanced_agents"] == "true") ? true : false;
+    
+    
+    if (output_csv) {
+        //Generates timedate as string in format "YYYY-MM-DD-HH-MM-SS" to use in file name
+        time_t t = std::time(0);
+        tm* now = std::localtime(&t);
+        file_suffix = to_string(now->tm_year + 1900) + '-' + to_string(now->tm_mon + 1) + '-' 
+                        + to_string(now->tm_mday) + '-' + to_string(now->tm_hour) + '-' 
+                        + to_string(now->tm_min) + '-' + to_string(now->tm_sec);
+    }
+}
 
 
 void Simulation::output_csv_row(vector <string> outputs) {

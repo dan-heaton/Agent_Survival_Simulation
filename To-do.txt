@@ -1,5 +1,3 @@
-- Improve 'Predator' 'seek_agent()' behaviour
-- Move settings of simulation to config file + change simulation to use that instead of passed-in arguments
 - Setup 'ReplicationAgent' class to inherit from 'AdvancedAgent' with more attributes (e.g. speed, energy_to_replicate) that is randomised upon creation
 - Improve 'ReplicationAgent' 'seek_energy()' behaviour to take value of energy into account
 - Improve 'ReplicationAgent' 'seek_energy()' with lookahead behaviour (i.e. to seek energies that require more than 1 move to reach)
