@@ -28,7 +28,7 @@ int BasicAgent::check_path(char direction, int new_pos) {
 
         for (int i: increment_positions) {
             if (environment_tiles[y_pos-1][i-1] == 'O') {
-                cout << "Agent '" << name << "' encountered obstacle at (" << i << ", " << y_pos << "); stopping here..." << endl;
+                cout << name << " encountered obstacle at (" << i << ", " << y_pos << "); stopping here..." << endl;
                 // Stops the square before the obstacle
                 if (new_pos > x_pos) {
                     return i-1;
@@ -38,7 +38,7 @@ int BasicAgent::check_path(char direction, int new_pos) {
                 }
             }
             else if (environment_tiles[y_pos-1][i-1] == 'E') {
-                cout << "Agent '" << name << "' encountered energy at (" << i << ", " << y_pos << "); consuming and continuing..." << endl;
+                cout << name << " encountered energy at (" << i << ", " << y_pos << "); consuming and continuing..." << endl;
                 vector <int> energy_position = {y_pos-1, i-1};
                 energies_consumed.push_back(energy_position);
                 environment_tiles[y_pos-1][i-1] = '-';
@@ -57,7 +57,7 @@ int BasicAgent::check_path(char direction, int new_pos) {
 
         for (int i: increment_positions) {
             if (environment_tiles[i-1][x_pos-1] == 'O') {
-                cout << "Agent '" << name << "' encountered obstacle at (" << x_pos << ", " << i << "); stopping here..." << endl;
+                cout << name << " encountered obstacle at (" << x_pos << ", " << i << "); stopping here..." << endl;
                 // Stops the square before the obstacle
                 if (new_pos > y_pos) {
                     return i-1;
@@ -68,7 +68,7 @@ int BasicAgent::check_path(char direction, int new_pos) {
                 
             }
             else if (environment_tiles[i-1][x_pos-1] == 'E') {
-                cout << "Agent '" << name << "' encountered energy at (" << x_pos << ", " << i << "); consuming and continuing..." << endl;
+                cout << name << " encountered energy at (" << x_pos << ", " << i << "); consuming and continuing..." << endl;
                 vector <int> energy_position = {i-1, x_pos-1};
                 energies_consumed.push_back(energy_position);
                 environment_tiles[i-1][x_pos-1] = '-';
@@ -210,7 +210,7 @@ void BasicAgent::seek_energy() {
 
 
 void BasicAgent::state_position(char dimension, int move_size) {
-    cout << name << "' moved " << move_size << " units on " << dimension << 
+    cout << name << " moved " << move_size << " units on " << dimension << 
     "-axis to new position (" << x_pos << ", " << y_pos << ")" << endl;
 }
 
