@@ -1,5 +1,6 @@
 ## 0.2.0 - 06/02/21
 - Minor console output cleanup
+- Changed simulation to use commas in .csv output instead of tabs
 
 ## 0.1.16 - 04/02/21
 - Move settings of simulation to config file + change simulation to use that instead of passed-in arguments

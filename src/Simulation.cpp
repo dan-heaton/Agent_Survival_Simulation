@@ -57,7 +57,7 @@ void Simulation::output_csv_row(vector <string> outputs) {
     ofstream file(file_name, ios::app);
 
     for (string output: outputs) { 
-        file << output << "\t";
+        file << output << ",";
     }
 
     file << "\n";
