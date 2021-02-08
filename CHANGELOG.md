@@ -1,5 +1,6 @@
 ## 0.2.1 - 08/02/21
 - Standaridation of using 'name' attribute over 'message' attribute for multiple classes
+- Basic implementation of ReplicationAgent class (w/ .cpp and .h files)
 
 ## 0.2.0 - 06/02/21
 - Minor console output cleanup
