@@ -5,7 +5,7 @@
 using namespace std;
 
 
-AdvancedAgent::AdvancedAgent(string message, int x_bound, int y_bound): BasicAgent(message, x_bound, y_bound) {}
+AdvancedAgent::AdvancedAgent(string name, int x_bound, int y_bound): BasicAgent(name, x_bound, y_bound) {}
 
 
 void AdvancedAgent::find_blocked_directions(vector <vector <int>> search_positions) {

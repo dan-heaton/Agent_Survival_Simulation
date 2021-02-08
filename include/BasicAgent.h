@@ -34,7 +34,7 @@ class BasicAgent {
         bool move_to_energy(vector <vector <int>> search_positions);
 
     public:  
-        BasicAgent(string message, int x_bound=100, int y_bound=100);
+        BasicAgent(string name, int x_bound=100, int y_bound=100);
         void move(char direction, int move_amount);
         void move_random();
         //Virtual allows AdvancedAgent's overriden version to be used correctly in Simulation class

@@ -15,7 +15,7 @@ class AdvancedAgent: public BasicAgent {
         void break_out_loop(vector <int> current_position);
 
     public:
-        AdvancedAgent(string message, int x_bound=100, int y_bound=100);
+        AdvancedAgent(string name, int x_bound=100, int y_bound=100);
         void seek_energy();
 };
 

@@ -10,7 +10,7 @@ using namespace std;
 BasicAgent::BasicAgent(string name, int x_bound, int y_bound) : name(name), x_bound(x_bound), y_bound(y_bound){
     x_pos = rand() % x_bound + 1;
     y_pos = rand() % y_bound + 1;
-    cout << "BasicAgent created at (" << x_pos << ", " << y_pos << ")";
+    cout << "Agent created at (" << x_pos << ", " << y_pos << ")";
     cout << " with name '" << name << "'!" << endl;
 }
 
