@@ -13,13 +13,14 @@ class Simulation {
         int time_steps;
         int x_bound;
         int y_bound;
+        int max_energy_to_replicate;
         int num_agents;
         int num_predators;
         int num_obstacles;
         int num_energies;
+        int agent_choice;
         bool seek_energy;
         bool output_csv;
-        bool use_advanced_agents;
         string file_suffix;
     
     public:

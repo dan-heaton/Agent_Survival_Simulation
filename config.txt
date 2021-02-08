@@ -1,10 +1,11 @@
 time_steps = 50
 x_bound = 15
 y_bound = 15
-num_agents = 1
-num_predators = 1
-num_obstacles = 0
+max_energy_to_replicate = 100
+num_agents = 2
+num_predators = 0
+num_obstacles = 20
 num_energies = 20
+agent_choice = 3
 seek_energy = true
-output_csv = false
-use_advanced_agents = true
+output_csv = true

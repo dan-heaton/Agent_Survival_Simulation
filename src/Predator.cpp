@@ -9,10 +9,8 @@ Predator::Predator(string name, int x_bound, int y_bound): name(name), x_bound(x
     y_pos = rand() % y_bound + 1;
     cout << "Predator created at (" << x_pos << ", " << y_pos << ")";
     cout << " with name '" << name << "'!" << endl;
-    //speed = rand() % max(x_bound, y_bound) + 1;
-    
-    // TODO : revert this!
-    speed = 20;
+
+    speed = rand() % max(x_bound, y_bound) + 1;
     cout << "Predator initialised with speed " << speed << "..." << endl;
 }
 

@@ -5,6 +5,7 @@
 #include "../include/AdvancedAgent.h"
 #include "../include/BasicAgent.h"
 #include "../include/BasicEnvironment.h"
+#include "../include/ReplicationAgent.h"
 #include "../include/Simulation.h"
 
 
@@ -32,13 +33,15 @@ Simulation::Simulation() {
     time_steps = stoi(config_pairs["time_steps"]);
     x_bound = stoi(config_pairs["x_bound"]);
     y_bound = stoi(config_pairs["y_bound"]);
+    max_energy_to_replicate = stoi(config_pairs["max_energy_to_replicate"]);
     num_agents = stoi(config_pairs["num_agents"]);
     num_predators = stoi(config_pairs["num_predators"]);
     num_obstacles = stoi(config_pairs["num_obstacles"]);
     num_energies = stoi(config_pairs["num_energies"]);
+    // Set to 1 for BasicAgent, 2 for AdvancedAgent, or 3 for ReplicationAgent
+    agent_choice = stoi(config_pairs["agent_choice"]);
     seek_energy = (config_pairs["seek_energy"] == "true") ? true : false;
     output_csv = (config_pairs["output_csv"] == "true") ? true : false;
-    use_advanced_agents = (config_pairs["use_advanced_agents"] == "true") ? true : false;
     
     
     if (output_csv) {
@@ -69,7 +72,7 @@ void Simulation::initialise_csv(BasicEnvironment environment, vector <BasicAgent
 
     //Sets up 1st line for initial settings headers
     vector <string> first_outputs = {"Time Steps", "X-bound", "Y-bound", "# Agents", "# Predators", 
-                                     "# Obstacles", "# Energies", "Seek Energy?", "Advanced Agents?"};
+                                     "# Obstacles", "# Energies", "Seek Energy?", "Agent Choice?"};
     for (int i=0; i<num_obstacles; i++) {
         for (char dimension: vector <char> {'X', 'Y'}) {
             first_outputs.push_back("Obstacle " + to_string(i+1) + " " + dimension + "-Pos");
@@ -85,7 +88,7 @@ void Simulation::initialise_csv(BasicEnvironment environment, vector <BasicAgent
     //Sets up 2nd line for initial settings
     vector <string> second_outputs = {to_string(time_steps), to_string(x_bound), to_string(y_bound), to_string(num_agents), 
                                       to_string(num_predators), to_string(num_obstacles), to_string(num_energies), 
-                                      seek_energy ? "true": "false", use_advanced_agents? "true": "false"};
+                                      seek_energy ? "true": "false", to_string(agent_choice)};
     for (Obstacle obst: environment.get_obstacles()) {
         second_outputs.insert(second_outputs.end(), {to_string(obst.x_pos), to_string(obst.y_pos)});
     }
@@ -135,15 +138,18 @@ void Simulation::run_simulation(int time_delay) {
     vector <BasicAgent*> agent_ptrs;
     for (int i=0; i<num_agents; i++) {
         string agent_name = "Agent " + to_string(i+1);
-        //Creates a new agent pointer from either BasicAgent or AdvancedAgent, and uses polymorphism to call
-        //each class' respective 'seek_energy()' funtion
+        //Creates a new agent pointer from either BasicAgent, AdvancedAgent, or ReplicationAgent, 
+        //and uses polymorphism to call each class' respective 'seek_energy()' funtion
         BasicAgent* agent_ptr;
-        if (use_advanced_agents) {
+        if (agent_choice == 1) {
             agent_ptr = new AdvancedAgent(agent_name, x_bound, y_bound);
         }
-        else {
+        else if (agent_choice == 2) {
             // Needs dynamic allocation to ensure objects survive out of the 'for' scope
             agent_ptr = new BasicAgent(agent_name, x_bound, y_bound);            
+        }
+        else {
+            agent_ptr = new ReplicationAgent(agent_name, max_energy_to_replicate, x_bound, y_bound);   
         }
         agent_ptrs.push_back(agent_ptr);
     }
