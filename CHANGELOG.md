@@ -1,3 +1,7 @@
+## 0.2.2 - 09/02/21
+- Added filtering of out-of-bounds search positions for ReplicationAgent
+- Changed looping mechanism in 'seek_energy()' to take agent's speed into account
+
 ## 0.2.1 - 08/02/21
 - Standaridation of using 'name' attribute over 'message' attribute for multiple classes
 - Basic implementation of ReplicationAgent class (w/ .cpp and .h files)

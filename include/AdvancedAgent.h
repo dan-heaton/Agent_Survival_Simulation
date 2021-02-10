@@ -6,7 +6,7 @@
 
 
 class AdvancedAgent: public BasicAgent {
-    private:
+    protected:
         vector <vector <int>> previous_positions;
         //Stores a mental map of directions that are blocked and how far away they are that is reset at the beginning of each move
         map <char, int> blocked_directions;

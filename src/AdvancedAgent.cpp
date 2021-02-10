@@ -109,15 +109,16 @@ void AdvancedAgent::seek_energy() {
     while (!found_energy) {
 
         vector <vector <int>> search_positions = generate_search_positions(search_radius);
-        find_blocked_directions(search_positions);
-        //Limits new positions to search to being only those which aren't blocked by an obstacle
 
+        //Limits new positions to search to being only those which aren't blocked by an obstacle
+        find_blocked_directions(search_positions);
         search_positions = remove_search_positions(search_positions);
+
         found_energy = move_to_energy(search_positions);
         ++search_radius;
 
         //If the agent can't find any more energy on the board, gives up on seeking energy
-        if (search_radius > x_bound and search_radius > y_bound) {
+        if (search_radius >= x_bound and search_radius >= y_bound) {
             break;
         }
     }
