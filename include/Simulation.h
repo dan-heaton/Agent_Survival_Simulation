@@ -14,6 +14,7 @@ class Simulation {
         int x_bound;
         int y_bound;
         int max_energy_to_replicate;
+        int max_num_lookaheads;
         int num_agents;
         int num_predators;
         int num_obstacles;

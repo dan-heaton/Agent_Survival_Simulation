@@ -1,5 +1,4 @@
-- Improve 'ReplicationAgent' 'seek_energy()' with lookahead behaviour (i.e. to seek energies that require more than 1 move to reach)
 - Add to 'ReplicationAgent' ability to replicate upon reaching a specific energy, along with how these are created and added to simulation
 - Improve 'ReplicationAgent' 'replicate()' to use aspects of crossover/mutation
 - Implement 'DynamicEnvironment', with random destructive events to environment (e.g. destroys certain agents/obstacles) + implement in simulation
-- Conduct experiments w/ ReplicationAgent's and plot speed and energy_to_replicate against success (i.e. total energy consumed)
+- Conduct experiments w/ ReplicationAgent's and plot speed/energy_to_replicate/num_lookaheads against success (i.e. total energy consumed)

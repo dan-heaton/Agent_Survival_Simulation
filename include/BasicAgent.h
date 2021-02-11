@@ -16,7 +16,6 @@ class BasicAgent {
         int prev_x_pos;
         int prev_y_pos;
         int energy = 0;
-        vector <vector <int>> energies_consumed;
         bool is_environ_set = false;
         bool is_dead = false;
         friend class BasicEnvironment;
@@ -36,6 +35,8 @@ class BasicAgent {
         //(e.g. as part of ReplicationAgent's lookahead functionality)
         void set_x_pos(int new_x_pos);
         void set_y_pos(int new_y_pos);
+        //Needs to be able to be seen by 'ReplicationAgent' during lookahead search
+        vector <vector <int>> energies_consumed;
 
     public:  
         BasicAgent(string name, int x_bound=100, int y_bound=100);

@@ -34,6 +34,7 @@ Simulation::Simulation() {
     x_bound = stoi(config_pairs["x_bound"]);
     y_bound = stoi(config_pairs["y_bound"]);
     max_energy_to_replicate = stoi(config_pairs["max_energy_to_replicate"]);
+    max_num_lookaheads = stoi(config_pairs["max_num_lookaheads"]);
     num_agents = stoi(config_pairs["num_agents"]);
     num_predators = stoi(config_pairs["num_predators"]);
     num_obstacles = stoi(config_pairs["num_obstacles"]);
@@ -149,7 +150,7 @@ void Simulation::run_simulation(int time_delay) {
             agent_ptr = new BasicAgent(agent_name, x_bound, y_bound);            
         }
         else {
-            agent_ptr = new ReplicationAgent(agent_name, max_energy_to_replicate, x_bound, y_bound);   
+            agent_ptr = new ReplicationAgent(agent_name, max_energy_to_replicate, max_num_lookaheads, x_bound, y_bound);   
         }
         agent_ptrs.push_back(agent_ptr);
     }
