@@ -32,6 +32,10 @@ class BasicAgent {
         vector <vector <char>> environment_tiles;
         vector <vector <int>> generate_search_positions(int search_radius);
         bool move_to_energy(vector <vector <int>> search_positions);
+        //Only agents or descendents of agents should be able to directly set positions
+        //(e.g. as part of ReplicationAgent's lookahead functionality)
+        void set_x_pos(int new_x_pos);
+        void set_y_pos(int new_y_pos);
 
     public:  
         BasicAgent(string name, int x_bound=100, int y_bound=100);

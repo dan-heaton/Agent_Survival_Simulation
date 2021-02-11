@@ -1,3 +1,6 @@
+## 0.2.3 - 11/02/21
+- Added setter methods for x/y pos for use by ReplicationAgent during lookahead
+
 ## 0.2.2 - 09/02/21
 - Added filtering of out-of-bounds search positions for ReplicationAgent
 - Changed looping mechanism in 'seek_energy()' to take agent's speed into account

@@ -224,6 +224,17 @@ int BasicAgent::get_y_pos() {
     return y_pos;
 }
 
+
+void BasicAgent::set_x_pos(int new_x_pos) {
+    x_pos = new_x_pos;
+}
+
+
+void BasicAgent::set_y_pos(int new_y_pos) {
+    y_pos = new_y_pos;
+}
+
+
 string BasicAgent::get_name() {
     return name;
 }
