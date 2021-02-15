@@ -89,6 +89,7 @@ void BasicEnvironment::insert_predators_agents(vector <Predator*> predators, vec
     vector <vector <int>> agent_positions;
     
     //Adds each predator and agent to the environment and stores their respective initialisation positions in separate lists
+    //(or current positions, depending on whether being called at beginning of simulation of when agent is replicated)
     for (Predator* predator: predators) {
         predator_ptrs.push_back(predator);
         predator_positions.push_back(vector <int> {predator->x_pos, predator->y_pos});

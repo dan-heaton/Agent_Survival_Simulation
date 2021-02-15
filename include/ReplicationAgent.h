@@ -16,9 +16,10 @@ class ReplicationAgent: public AdvancedAgent {
         vector <int> lookahead(vector <vector <int>> search_positions, int num_lookaheads);
 
     public:
-        ReplicationAgent(string name, int max_energy_to_replicate, int max_num_lookaheads, int x_bound=100, int y_bound=100);
+        ReplicationAgent(string name, int min_energy_to_replicate, int max_energy_to_replicate, 
+                         int max_num_lookaheads, int x_bound=100, int y_bound=100);
         void seek_energy();
-        void replicate();
+        bool check_replicate();
 };
 
 

@@ -32,9 +32,11 @@ class BasicAgent {
         vector <vector <int>> generate_search_positions(int search_radius);
         bool move_to_energy(vector <vector <int>> search_positions);
         //Only agents or descendents of agents should be able to directly set positions
-        //(e.g. as part of ReplicationAgent's lookahead functionality)
+        //(e.g. as part of ReplicationAgent's lookahead functionality) or energy level
+        //(e.g. after ReplicationAgent replicates, which consumes energy)
         void set_x_pos(int new_x_pos);
         void set_y_pos(int new_y_pos);
+        void set_energy(int new_energy);
         //Needs to be able to be seen by 'ReplicationAgent' during lookahead search
         vector <vector <int>> energies_consumed;
 
@@ -48,6 +50,7 @@ class BasicAgent {
         int get_y_pos();
         string get_name();
         bool get_is_dead();
+        int get_energy();
 };
 
 

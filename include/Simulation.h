@@ -13,6 +13,7 @@ class Simulation {
         int time_steps;
         int x_bound;
         int y_bound;
+        int min_energy_to_replicate;
         int max_energy_to_replicate;
         int max_num_lookaheads;
         int num_agents;
@@ -23,6 +24,8 @@ class Simulation {
         bool seek_energy;
         bool output_csv;
         string file_suffix;
+        //Needed for when an agent replicates to set a new, unique name based on new num of agents
+        void increment_num_agents();
     
     public:
         Simulation();

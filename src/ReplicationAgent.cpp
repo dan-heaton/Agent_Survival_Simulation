@@ -5,13 +5,14 @@
 using namespace std;
 
 
-ReplicationAgent::ReplicationAgent(string name, int max_energy_to_replicate, int max_num_lookaheads, int x_bound, int y_bound): 
+ReplicationAgent::ReplicationAgent(string name, int min_energy_to_replicate, int max_energy_to_replicate, 
+                                   int max_num_lookaheads, int x_bound, int y_bound): 
                                    AdvancedAgent(name, x_bound, y_bound) {
     speed = rand() % max(x_bound, y_bound) + 1;
     cout << "Agent " << name << " initialised with speed " << speed << "..." << endl;
 
 
-    energy_to_replicate = rand() % max_energy_to_replicate + 1;
+    energy_to_replicate = rand() % (max_energy_to_replicate - min_energy_to_replicate + 1) + min_energy_to_replicate;
     cout << "Agent " << name << " initialised with energy to replicate being " << energy_to_replicate << "..." << endl;
 
     num_lookaheads = rand() % max_num_lookaheads + 1;
@@ -168,6 +169,16 @@ void ReplicationAgent::seek_energy() {
 }
 
 
-void ReplicationAgent::replicate() {
-    //TODO : add this!
+bool ReplicationAgent::check_replicate() {
+    //If the agent has enough energy to replicate, returns true after subtracting the energy 
+    //used to replicate
+    int current_energy = get_energy();
+    if (current_energy >= energy_to_replicate) {
+        set_energy(current_energy - energy_to_replicate);
+        cout << "Agent '" << get_name() << "' is replicating..." << endl;
+        return true;
+    }
+    else {
+        return false;
+    }
 }

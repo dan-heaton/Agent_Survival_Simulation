@@ -235,10 +235,21 @@ void BasicAgent::set_y_pos(int new_y_pos) {
 }
 
 
+void BasicAgent::set_energy(int new_energy) {
+    energy = new_energy;
+}
+
+
 string BasicAgent::get_name() {
     return name;
 }
 
+
 bool BasicAgent::get_is_dead() {
     return is_dead;
+}
+
+
+int BasicAgent::get_energy() {
+    return energy;
 }

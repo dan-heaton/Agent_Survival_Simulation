@@ -1,3 +1,8 @@
+## 0.2.4 - 15/02/21
+- Added to 'ReplicationAgent' the ability to replicate upon reaching a specific energy
+- Modified simulation and other files to account for new agents being created at runtime
+- Added a minimum energy threshold to replication
+
 ## 0.2.3 - 11/02/21
 - Added setter methods for x/y pos for use by ReplicationAgent during lookahead
 - Improved 'ReplicationAgent' 'seek_energy()' with lookahead behaviour (i.e. to seek energies that require more than 1 move to reach)

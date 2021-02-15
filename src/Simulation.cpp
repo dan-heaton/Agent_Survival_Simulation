@@ -33,6 +33,7 @@ Simulation::Simulation() {
     time_steps = stoi(config_pairs["time_steps"]);
     x_bound = stoi(config_pairs["x_bound"]);
     y_bound = stoi(config_pairs["y_bound"]);
+    min_energy_to_replicate = stoi(config_pairs["min_energy_to_replicate"]);
     max_energy_to_replicate = stoi(config_pairs["max_energy_to_replicate"]);
     max_num_lookaheads = stoi(config_pairs["max_num_lookaheads"]);
     num_agents = stoi(config_pairs["num_agents"]);
@@ -143,14 +144,18 @@ void Simulation::run_simulation(int time_delay) {
         //and uses polymorphism to call each class' respective 'seek_energy()' funtion
         BasicAgent* agent_ptr;
         if (agent_choice == 1) {
-            agent_ptr = new AdvancedAgent(agent_name, x_bound, y_bound);
+            agent_ptr = new BasicAgent(agent_name, x_bound, y_bound);
+            cout << "Created BasicAgent..." << endl;
         }
         else if (agent_choice == 2) {
             // Needs dynamic allocation to ensure objects survive out of the 'for' scope
-            agent_ptr = new BasicAgent(agent_name, x_bound, y_bound);            
+            agent_ptr = new AdvancedAgent(agent_name, x_bound, y_bound);
+            cout << "Created AdvancedAgent..." << endl;
         }
         else {
-            agent_ptr = new ReplicationAgent(agent_name, max_energy_to_replicate, max_num_lookaheads, x_bound, y_bound);   
+            agent_ptr = new ReplicationAgent(agent_name, min_energy_to_replicate, max_energy_to_replicate, 
+                                             max_num_lookaheads, x_bound, y_bound);   
+            cout << "Created ReplicationAgent..." << endl;
         }
         agent_ptrs.push_back(agent_ptr);
     }
@@ -167,7 +172,8 @@ void Simulation::run_simulation(int time_delay) {
 
     // For the required number of time steps, have all agents and predators move across the board
     for (int i=0; i<time_steps; i++) {
-        //Delays output of new board so shows running in 'real-time' if necessary
+        //Delays output of new board so shows running in 'real-time' if necessary (and, if the 
+        //agents are ReplicationAgents) have them replicate if achieved the required energy
         sleep(time_delay);
 
         vector <string> outputs;
@@ -176,6 +182,8 @@ void Simulation::run_simulation(int time_delay) {
             outputs.insert(outputs.end(), {to_string(predator_ptr->get_x_pos()), to_string(predator_ptr->get_y_pos())});
         }
 
+        vector <BasicAgent*> new_agent_ptrs;
+        bool agent_to_add;
         for (BasicAgent* agent_ptr: agent_ptrs) {
             if (seek_energy) {
                 agent_ptr->seek_energy();
@@ -183,9 +191,28 @@ void Simulation::run_simulation(int time_delay) {
             else {
                 agent_ptr->move_random();
             }
+            //Checks if the underlying object is a ReplicationAgent and, if it is, have it replicate
+            if (ReplicationAgent* repl_agent_ptr = dynamic_cast<ReplicationAgent*> (agent_ptr)) {
+                bool can_replicate = repl_agent_ptr->check_replicate();
+                if (can_replicate) {
+                    increment_num_agents();
+                    string agent_name = "Agent " + to_string(num_agents);
+                    BasicAgent* new_agent_ptr = new ReplicationAgent(agent_name, min_energy_to_replicate, max_energy_to_replicate, 
+                                                                     max_num_lookaheads, x_bound, y_bound);
+                    new_agent_ptrs.push_back(new_agent_ptr);
+                    agent_to_add = true;
+                }
+            }
             outputs.insert(outputs.end(), {to_string(agent_ptr->get_x_pos()), to_string(agent_ptr->get_y_pos())});
         }
 
+        // If agent(s) have replicated, add them to the new list of active agents only after the current ones have actually moved 
+        // (meaning that, on the time instance they spawn, they don't actually move)
+        if (agent_to_add) {
+            agent_ptrs.insert(agent_ptrs.end(), new_agent_ptrs.begin(), new_agent_ptrs.end());
+            environment.insert_predators_agents(predator_ptrs, agent_ptrs);
+        }
+        
         environment.update();
         environment.visualise();
 
@@ -209,10 +236,11 @@ void Simulation::run_simulation(int time_delay) {
         }   
     }
 
-    //Kills off the agents, now that we're done with the simulation
-    for (BasicAgent* agent_ptr: agent_ptrs) {
-        delete agent_ptr;
-    }
 
     cout << "Simulation complete!" << endl;
+}
+
+
+void Simulation::increment_num_agents() {
+    ++num_agents;
 }
