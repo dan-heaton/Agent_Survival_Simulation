@@ -26,6 +26,7 @@ class Simulation {
         bool output_csv;
         string output_dir;
         string file_suffix;
+        bool disable_cout;
         //Needed for when an agent replicates to set a new, unique name based on new num of agents
         void increment_num_agents();
     

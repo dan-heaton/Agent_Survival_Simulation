@@ -13,3 +13,4 @@ agent_choice = 3
 seek_energy = true
 output_csv = true
 output_dir = outputs
+disable_cout = false

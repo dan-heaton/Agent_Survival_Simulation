@@ -46,6 +46,7 @@ Simulation::Simulation() {
     seek_energy = (config_pairs["seek_energy"] == "true") ? true : false;
     output_csv = (config_pairs["output_csv"] == "true") ? true : false;
     output_dir = config_pairs["output_dir"];
+    disable_cout = (config_pairs["disable_cout"] == "true") ? true : false;
     
     
     if (output_csv) {
@@ -126,6 +127,10 @@ void Simulation::initialise_csv(BasicEnvironment environment, vector <BasicAgent
 
 
 void Simulation::run_simulation() {
+
+    if (disable_cout) {
+        cout.setstate(std::ios_base::failbit);
+    }
 
     BasicEnvironment environment(x_bound, y_bound, num_obstacles, num_energies);
 
