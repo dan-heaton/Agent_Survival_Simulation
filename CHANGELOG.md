@@ -4,6 +4,8 @@
 of the output .csv (+ modified simulation accordingly)
 - Added the 'disable_cout' option to configuration to be able to disable console output 
 (e.g. if running 'run_experiments.py')
+- Added 'run_experiments.py' script to coordinate the running of simulations in batch and 
+utilising multiple settings of configurations
 
 ## 0.2.4 - 15/02/21
 - Added to 'ReplicationAgent' the ability to replicate upon reaching a specific energy
