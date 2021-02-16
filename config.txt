@@ -1,4 +1,4 @@
-time_delay = 1
+time_delay = 0
 time_steps = 50
 x_bound = 15
 y_bound = 15
@@ -11,4 +11,5 @@ num_obstacles = 20
 num_energies = 20
 agent_choice = 3
 seek_energy = true
-output_csv = false
+output_csv = true
+output_dir = outputs

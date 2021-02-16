@@ -24,6 +24,7 @@ class Simulation {
         int agent_choice;
         bool seek_energy;
         bool output_csv;
+        string output_dir;
         string file_suffix;
         //Needed for when an agent replicates to set a new, unique name based on new num of agents
         void increment_num_agents();

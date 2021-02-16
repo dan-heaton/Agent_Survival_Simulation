@@ -1,5 +1,7 @@
 ## 0.2.5 - 16/02/21
 - Moved the 'time_delay' from setting via Simulation::run_simulation() to the config file
+- Added 'output_dir' option to configuration to be able to set the directory and subdirectory 
+of the output .csv (+ modified simulation accordingly)
 
 ## 0.2.4 - 15/02/21
 - Added to 'ReplicationAgent' the ability to replicate upon reaching a specific energy

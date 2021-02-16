@@ -45,6 +45,7 @@ Simulation::Simulation() {
     agent_choice = stoi(config_pairs["agent_choice"]);
     seek_energy = (config_pairs["seek_energy"] == "true") ? true : false;
     output_csv = (config_pairs["output_csv"] == "true") ? true : false;
+    output_dir = config_pairs["output_dir"];
     
     
     if (output_csv) {
@@ -59,7 +60,7 @@ Simulation::Simulation() {
 
 
 void Simulation::output_csv_row(vector <string> outputs) {
-    string file_name = "outputs/simulation_" + file_suffix + ".csv";
+    string file_name = output_dir + "/simulation_" + file_suffix + ".csv";
     ofstream file(file_name, ios::app);
 
     for (string output: outputs) { 
