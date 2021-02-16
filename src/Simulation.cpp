@@ -30,6 +30,7 @@ Simulation::Simulation() {
     }
 
     //Initialises all model attributes from the configuration mapping 
+    time_delay = stoi(config_pairs["time_delay"]);
     time_steps = stoi(config_pairs["time_steps"]);
     x_bound = stoi(config_pairs["x_bound"]);
     y_bound = stoi(config_pairs["y_bound"]);
@@ -123,7 +124,7 @@ void Simulation::initialise_csv(BasicEnvironment environment, vector <BasicAgent
 }
 
 
-void Simulation::run_simulation(int time_delay) {
+void Simulation::run_simulation() {
 
     BasicEnvironment environment(x_bound, y_bound, num_obstacles, num_energies);
 

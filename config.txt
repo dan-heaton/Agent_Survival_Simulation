@@ -1,3 +1,4 @@
+time_delay = 1
 time_steps = 50
 x_bound = 15
 y_bound = 15

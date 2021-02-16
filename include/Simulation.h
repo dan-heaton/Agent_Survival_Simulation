@@ -10,6 +10,7 @@ using namespace std;
 
 class Simulation {
     private:
+        int time_delay;
         int time_steps;
         int x_bound;
         int y_bound;
@@ -31,7 +32,7 @@ class Simulation {
         Simulation();
         void output_csv_row(vector <string> outputs);
         void initialise_csv(BasicEnvironment environment, vector <BasicAgent*> agent_ptrs);
-        void run_simulation(int time_delay=0);
+        void run_simulation();
 };
 
 

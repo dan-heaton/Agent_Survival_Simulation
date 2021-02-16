@@ -1,3 +1,6 @@
+## 0.2.5 - 16/02/21
+- Moved the 'time_delay' from setting via Simulation::run_simulation() to the config file
+
 ## 0.2.4 - 15/02/21
 - Added to 'ReplicationAgent' the ability to replicate upon reaching a specific energy
 - Modified simulation and other files to account for new agents being created at runtime
