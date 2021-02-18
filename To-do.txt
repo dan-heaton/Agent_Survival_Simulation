@@ -1,3 +1,2 @@
-- Improve 'ReplicationAgent' 'replicate()' to use aspects of crossover/mutation
 - Implement 'DynamicEnvironment', with random destructive events to environment (e.g. destroys certain agents/obstacles) + implement in simulation
 - Conduct experiments w/ ReplicationAgent's and plot speed/energy_to_replicate/num_lookaheads against success (i.e. total energy consumed)

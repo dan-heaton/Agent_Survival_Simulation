@@ -1,3 +1,7 @@
+## 0.2.6 - 18/02/21
+- Improved 'ReplicationAgent' to cause replicated agents to have mutated attributes based 
+around normally generated values relative to the replicator agent's values
+
 ## 0.2.5 - 16/02/21
 - Moved the 'time_delay' from setting via Simulation::run_simulation() to the config file
 - Added 'output_dir' option to configuration to be able to set the directory and subdirectory 

@@ -202,11 +202,13 @@ void Simulation::run_simulation() {
             if (ReplicationAgent* repl_agent_ptr = dynamic_cast<ReplicationAgent*> (agent_ptr)) {
                 bool can_replicate = repl_agent_ptr->check_replicate();
                 if (can_replicate) {
+                    map <string, int> mutations_dict = repl_agent_ptr->generate_mutations();
                     increment_num_agents();
                     string agent_name = "Agent " + to_string(num_agents);
-                    BasicAgent* new_agent_ptr = new ReplicationAgent(agent_name, min_energy_to_replicate, max_energy_to_replicate, 
+                    ReplicationAgent* new_agent_ptr = new ReplicationAgent(agent_name, min_energy_to_replicate, max_energy_to_replicate, 
                                                                      max_num_lookaheads, x_bound, y_bound);
-                    new_agent_ptrs.push_back(new_agent_ptr);
+                    new_agent_ptr->mutate(mutations_dict);
+                    new_agent_ptrs.push_back((BasicAgent*)new_agent_ptr);
                     agent_to_add = true;
                 }
             }
