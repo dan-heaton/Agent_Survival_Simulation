@@ -1,3 +1,7 @@
+## 0.2.7 - 22/02/21
+- Added experiment sets and the simulation variations required to 'experiment_settings.json'
+- Modified 'run_experiment.py' to utilise these settings to run experiment sets and experiments
+
 ## 0.2.6 - 18/02/21
 - Improved 'ReplicationAgent' to cause replicated agents to have mutated attributes based 
 around normally generated values relative to the replicator agent's values
