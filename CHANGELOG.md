@@ -1,3 +1,9 @@
+## 0.2.8 - 23/02/21
+- Modified 'run_experiments.py' to work with arguments, including starting/ending indeces 
+within the experiment settings file and enabled the running of multiple repetitions of the same experiment
+- Modified 'analyse_csv.py' to work with the doubly-nested files produced by the changes 
+made to 'run_experiments.py' and average the analysis results over multiple repetitions
+
 ## 0.2.7 - 22/02/21
 - Added experiment sets and the simulation variations required to 'experiment_settings.json'
 - Modified 'run_experiment.py' to utilise these settings to run experiment sets and experiments

@@ -5,24 +5,17 @@ import numpy as np
 import argparse
 import pandas as pd
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--file_name",  type=str, help="Name of the simulation output file in 'outputs' to analyse (including extension). "
-                    "If not provided, need to provide file name via input statements.")
 
-args = parser.parse_args()
-
-
-
-def load_df():
+def load_df(fn: str, dir_path: str = None):
 
     # Gets the name of the file either through the optionally-provided argument or via 'input' statements and checks for validity
     file_name = None
-    if args.file_name:
-        fn = f"../outputs/{args.file_name}"
-        if os.path.exists(fn):
-            file_name = fn
+    if fn:
+        file_path = f"{dir_path}/{fn}" if dir_path else f"outputs/{fn}"
+        if os.path.exists(file_path):
+            file_name = file_path
         else:
-            print(f"Provided '--file_name' argument '{args.file_name}' doesn't match file in 'outputs'; try again...")
+            print(f"Provided '--file_name' argument '{fn}' doesn't match file in 'outputs'; try again...")
             sys.exit()
 
     else:
@@ -67,13 +60,39 @@ def compute_stats(upper_df, lower_df):
     for i in range(num_agents):
         for dim in ("X", "Y"):
             positions = lower_df.loc[:, f"Agent {i+1} {dim}-Pos"]
-            diffs = [int(positions[n]) - int(positions[n-1]) for n in range(1, len(positions))]
+            diffs = [abs(int(positions[n]) - int(positions[n-1])) for n in range(1, len(positions))]
             analysis_dict[f"Agent {i+1} average d{dim}/dT"] = np.mean(diffs)
 
     return analysis_dict
 
 
+def main(args):
+    if args.file_name:
+        upper_df, lower_df = load_df(args.file_name)
+        analysis_dict = compute_stats(upper_df, lower_df)
+    
+
+    if args.directory:
+        dir_path = f"outputs/{args.directory}"
+        inner_dir_paths = sorted([f"{dir_path}/{fn}" for fn in os.listdir(dir_path)])
+        for experiment_path in inner_dir_paths:
+            analysis_dicts = []
+            for file_name in sorted(os.listdir(experiment_path)):
+                upper_df, lower_df = load_df(file_name, experiment_path)
+                analysis_dicts.append(compute_stats(upper_df, lower_df))
+            # Averages over each of those repititions of an experiment (each an individual file)
+            # (also assumes that the keys for each dictionary are the same as each other, which should be the case)
+            meta_analysis_dict = {k: round(np.mean([a_d[k] for a_d in analysis_dicts]), 2) for k in analysis_dicts[0].keys()}
+            print(meta_analysis_dict)
+            sys.exit()
+
+
 if __name__ == "__main__":
-    upper_df, lower_df = load_df()
-    analysis_dict = compute_stats(upper_df, lower_df)
-    print(analysis_dict)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--file_name",  type=str, help="Name of the simulation output file in 'outputs' to analyse "
+                        "(including extension). If not provided, need to provide file name via input statements.")
+    parser.add_argument("--directory", type=str, help="Name of the directory within 'outputs' for which to analyse "
+                        "all the files.")
+    args = parser.parse_args()
+
+    main(args)
