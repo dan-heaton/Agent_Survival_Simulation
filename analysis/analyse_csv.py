@@ -1,6 +1,7 @@
 import os
 import sys
 import re
+import json
 import numpy as np
 import argparse
 import pandas as pd
@@ -66,6 +67,33 @@ def compute_stats(upper_df, lower_df):
     return analysis_dict
 
 
+def output_analysis(args_config_dict: dict, meta_analysis_dict: dict):
+    
+    # Selects the modifications made to default config settings for this specific experiment set 
+    # and experiment via querying the 'experiment_settings.json' file used by 'run_experiments.py'
+    with open("analysis/experiment_settings.json") as f:
+        experiment_settings = json.load(f)
+    experiment_set_dict = experiment_settings[int(args_config_dict["Experiment set"])-1]
+    experiment_config_dict = {k: v[int(args_config_dict["Experiment"])-1] for k, v in experiment_set_dict.items()}
+
+
+    # Combines the config settings used for the simulation and the analysis results into one output
+    # (also includes an 'breaker' column between)
+    output_dict = {**args_config_dict, "-+-+-+": "-+-+-+", **experiment_config_dict, 
+                   "+-+-+-": "+-+-+-", **meta_analysis_dict}
+
+    # Puts this dictionary into a DataFrame and either appends or writes this to the output file, 
+    # depending on whether a file already exists there or not
+    file_name = "analysis/outputs_analysis.csv"
+    df = pd.DataFrame.from_dict({k: [v] for k, v in output_dict.items()})
+    if os.path.exists(file_name):
+        df.to_csv(file_name, mode="a", index=False, header=False)
+        print(f"Appending analysis dict to '{file_name}'...")
+    else:
+        df.to_csv(file_name, mode="w", index=False)
+        print(f"Writing analysis dict to '{file_name}'...")
+
+
 def main(args):
     if args.file_name:
         upper_df, lower_df = load_df(args.file_name)
@@ -80,11 +108,19 @@ def main(args):
             for file_name in sorted(os.listdir(experiment_path)):
                 upper_df, lower_df = load_df(file_name, experiment_path)
                 analysis_dicts.append(compute_stats(upper_df, lower_df))
+
+            # Creates the info about what and how the experiments were run by 'run_experiments.py'
+            args_config_dict = {"Experiment set": args.directory.split("_")[-1], 
+                                "Experiment": experiment_path.split("_")[-1], 
+                                "Num Repeptitions": len(os.listdir(experiment_path))}
+
             # Averages over each of those repititions of an experiment (each an individual file)
             # (also assumes that the keys for each dictionary are the same as each other, which should be the case)
             meta_analysis_dict = {k: round(np.mean([a_d[k] for a_d in analysis_dicts]), 2) for k in analysis_dicts[0].keys()}
-            print(meta_analysis_dict)
-            sys.exit()
+            if args.no_console_output:
+                print(meta_analysis_dict)
+            if args.output_results:
+                output_analysis(args_config_dict, meta_analysis_dict)
 
 
 if __name__ == "__main__":
@@ -93,6 +129,10 @@ if __name__ == "__main__":
                         "(including extension). If not provided, need to provide file name via input statements.")
     parser.add_argument("--directory", type=str, help="Name of the directory within 'outputs' for which to analyse "
                         "all the files.")
+    parser.add_argument("--output_results", action="store_true", help="Set true if wish to output the analysis "
+                        "results to .csv output, along with the simulation configurations.")
+    parser.add_argument("--no_console_output", action="store_false", help="Set false if wish to specifically not " 
+                        "print the analyses to console output.")
     args = parser.parse_args()
 
     main(args)

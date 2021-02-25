@@ -1,3 +1,8 @@
+## 0.2.9 - 25/02/21
+- Modified 'analyse_csv.py' to output the results of the analyses of experiments to .csv, 
+along with the settings of the specific experiment set / experiment / repetitions and 
+which settings in config.txt were modified by 'analyse_csv.py'
+
 ## 0.2.8 - 23/02/21
 - Modified 'run_experiments.py' to work with arguments, including starting/ending indeces 
 within the experiment settings file and enabled the running of multiple repetitions of the same experiment
