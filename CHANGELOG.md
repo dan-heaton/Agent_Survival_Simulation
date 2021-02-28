@@ -1,3 +1,9 @@
+## 0.2.10 - 28/02/21
+- Ran 'run_experiments.py' for all experiment sets to produce contents in 'outputs' dir, 
+excluding 'max_num_lookaheads' = 0 due to simulation not working for that setting
+- Ran 'analyse_csv.py' to produce 'outputs_analysis.csv'
+- Minor bug fixes to 'analyse_csv.py' as they came up
+
 ## 0.2.9 - 25/02/21
 - Modified 'analyse_csv.py' to output the results of the analyses of experiments to .csv, 
 along with the settings of the specific experiment set / experiment / repetitions and 

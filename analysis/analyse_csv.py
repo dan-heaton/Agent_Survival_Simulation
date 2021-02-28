@@ -39,7 +39,7 @@ def load_df(fn: str, dir_path: str = None):
     # Creates the 'lower' part (containing the state of the board at specific time increments), 
     # without the extra columns needed in the configuration line
     headers = df.iloc[1].dropna()
-    lower_df = pd.DataFrame(df.dropna(axis=1).values[2:], columns=list(headers))
+    lower_df = pd.DataFrame(df.iloc[2:, :len(headers)].to_numpy(), columns=list(headers))
 
     return upper_df, lower_df
 
@@ -48,16 +48,16 @@ def compute_stats(upper_df, lower_df):
 
     analysis_dict = {}
 
-    num_starting_energies = upper_df.loc[0, "# Energies"]
+    num_starting_energies = float(upper_df.loc[0, "# Energies"])
     num_ending_energies = lower_df.loc[lower_df.index[-1], "# Energies Remaining"]
-    num_energies_consumed = num_starting_energies - float(num_ending_energies)
+    num_energies_consumed = float(num_starting_energies) - float(num_ending_energies)
     percent_consumed = round((num_energies_consumed/num_starting_energies)*100, 2)
     analysis_dict["Percentage energies consumed"] = percent_consumed
 
     num_moves = lower_df.loc[lower_df.index[-1], "Time Step"]
     analysis_dict["Average energies consumed per move"] = round(num_energies_consumed / float(num_moves), 2)
     
-    num_agents = len(re.findall("X-Pos", " ".join(list(lower_df.columns))))
+    num_agents = len(re.findall("Agent [1-9] X-Pos", " ".join(list(lower_df.columns))))
     for i in range(num_agents):
         for dim in ("X", "Y"):
             positions = lower_df.loc[:, f"Agent {i+1} {dim}-Pos"]
@@ -74,7 +74,8 @@ def output_analysis(args_config_dict: dict, meta_analysis_dict: dict):
     with open("analysis/experiment_settings.json") as f:
         experiment_settings = json.load(f)
     experiment_set_dict = experiment_settings[int(args_config_dict["Experiment set"])-1]
-    experiment_config_dict = {k: v[int(args_config_dict["Experiment"])-1] for k, v in experiment_set_dict.items()}
+    experiment_config_dict = {"Experiment config": f"{k}-{v[int(args_config_dict['Experiment'])-1]}" 
+                                                   for k, v in experiment_set_dict.items()}
 
 
     # Combines the config settings used for the simulation and the analysis results into one output
@@ -106,7 +107,11 @@ def main(args):
         for experiment_path in inner_dir_paths:
             analysis_dicts = []
             for file_name in sorted(os.listdir(experiment_path)):
-                upper_df, lower_df = load_df(file_name, experiment_path)
+                try:
+                    upper_df, lower_df = load_df(file_name, experiment_path)
+                except pd.errors.ParserError:
+                    print(f"Unable to load file '{file_name}'; skipping and moving onto next file...")
+                    continue
                 analysis_dicts.append(compute_stats(upper_df, lower_df))
 
             # Creates the info about what and how the experiments were run by 'run_experiments.py'
